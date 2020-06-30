@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "es2017"
+    ],
+    "allowJs": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "strict": true ,
+    "esModuleInterop": true,
+    "types": [
+      "src/styles/styled.d.ts"
+    ]
+  }
+}
