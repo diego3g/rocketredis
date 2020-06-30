@@ -38,6 +38,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "html-webpack-plugin": "^4.2.0",
     "jest": "^26.1.0",
+    "json-schema-typed": "^7.0.3",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.5",
@@ -46,6 +47,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "electron-store": "^5.2.0",
     "polished": "^3.6.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

@@ -4,6 +4,7 @@ import os from 'os'
 import { FiX, FiMinus, FiMaximize2 } from 'react-icons/fi'
 
 import { Container, WindowActions, MacActionButton, DefaultActionButton } from './styles'
+import { useStoreValue } from '../../hooks/useStoreValue'
 
 const Header: React.FC = () => {
   const handleCloseWindow = useCallback(() => {
@@ -28,13 +29,17 @@ const Header: React.FC = () => {
     window.minimize()
   }, [])
 
-  const isMacOS = useMemo(() => os.platform() === 'darwin', [])
+  const useMacOSWindowActionButtons = useStoreValue('useMacOSWindowActionButtons')
+
+  const shouldUseMacOSWindowActions = useMemo(() => {
+    return useMacOSWindowActionButtons || os.platform() === 'darwin'
+  }, [useMacOSWindowActionButtons])
 
   return (
     <Container>
       <strong>Rocket Redis</strong>
 
-      {isMacOS ? (
+      {shouldUseMacOSWindowActions ? (
         <WindowActions position="left">
           <MacActionButton color="close" onClick={handleCloseWindow}>
             <FiX />
