@@ -5,7 +5,7 @@ import { Container, Connections } from './styles'
 
 const Sidebar: React.FC = () => {
   return (
-    <Container>
+    <Container className="app-sidebar">
       <Connections>
         <header>
           <strong>CONNECTIONS</strong>

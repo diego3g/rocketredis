@@ -1,6 +1,5 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { defaultTheme } from '../../styles/theme'
-import { lighten } from 'polished'
 
 export const Container = styled.header`
   width: 100%;
@@ -23,16 +22,21 @@ export const Container = styled.header`
   }
 `
 
-export const WindowActions = styled.div`
+interface WindowActionsProps {
+  position: 'left' | 'right';
+}
+
+export const WindowActions = styled.div<WindowActionsProps>`
   position: absolute;
-  left: 16px;
   top: 0;
   height: 100%;
   display: flex;
   align-items: center;
+
+  ${props => props.position === 'left' ? css`left: 16px;` : css`right: 16px;`};
 `
 
-interface WindowActionButtonProps {
+interface MacActionButtonProps {
   color: 'close' | 'minimize' | 'maximize';
 }
 
@@ -42,7 +46,7 @@ const colors = {
   maximize: defaultTheme.colors.green
 }
 
-export const WindowActionButton = styled.button<WindowActionButtonProps>`
+export const MacActionButton = styled.button<MacActionButtonProps>`
   background: ${props => colors[props.color]};
   -webkit-app-region: no-drag;
   border: 0;
@@ -66,6 +70,32 @@ export const WindowActionButton = styled.button<WindowActionButtonProps>`
 
   &:hover svg {
     display: block;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+`
+
+export const DefaultActionButton = styled.button`
+  background: transparent;
+  -webkit-app-region: no-drag;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.theme.colors.grey};
+
+  & + button {
+    margin-left: 12px;
+  }
+
+  &:hover svg {
+    color: ${props => props.theme.colors.white};
   }
 
   &:active {

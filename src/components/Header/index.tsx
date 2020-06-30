@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { remote } from 'electron'
+import os from 'os'
 import { FiX, FiMinus, FiMaximize2 } from 'react-icons/fi'
 
-import { Container, WindowActions, WindowActionButton } from './styles'
+import { Container, WindowActions, MacActionButton, DefaultActionButton } from './styles'
 
 const Header: React.FC = () => {
   const handleCloseWindow = useCallback(() => {
@@ -27,21 +28,37 @@ const Header: React.FC = () => {
     window.minimize()
   }, [])
 
+  const isMacOS = useMemo(() => os.platform() === 'darwin', [])
+
   return (
     <Container>
       <strong>Rocket Redis</strong>
 
-      <WindowActions>
-        <WindowActionButton color="close" onClick={handleCloseWindow}>
-          <FiX />
-        </WindowActionButton>
-        <WindowActionButton color="minimize" onClick={handleMinimize}>
-          <FiMinus />
-        </WindowActionButton>
-        <WindowActionButton color="maximize" onClick={handleMaximize}>
-          <FiMaximize2 />
-        </WindowActionButton>
-      </WindowActions>
+      {isMacOS ? (
+        <WindowActions position="left">
+          <MacActionButton color="close" onClick={handleCloseWindow}>
+            <FiX />
+          </MacActionButton>
+          <MacActionButton color="minimize" onClick={handleMinimize}>
+            <FiMinus />
+          </MacActionButton>
+          <MacActionButton color="maximize" onClick={handleMaximize}>
+            <FiMaximize2 />
+          </MacActionButton>
+        </WindowActions>
+      ) : (
+        <WindowActions position="right">
+          <DefaultActionButton onClick={handleMinimize}>
+            <FiMinus />
+          </DefaultActionButton>
+          <DefaultActionButton onClick={handleMaximize}>
+            <FiMaximize2 />
+          </DefaultActionButton>
+          <DefaultActionButton onClick={handleCloseWindow}>
+            <FiX />
+          </DefaultActionButton>
+        </WindowActions>
+      )}
     </Container>
   )
 }
