@@ -4,8 +4,8 @@
   "description": "A beautiful Redis GUI.",
   "main": "./dist/main.js",
   "scripts": {
-    "dev:electron": "SET NODE_ENV=development & webpack --config webpack/electron.webpack.js --mode development && electron .",
-    "dev:react": "SET NODE_ENV=development & webpack-dev-server --config webpack/react.webpack.js --mode development",
+    "dev:electron": "NODE_ENV=development webpack --config webpack/electron.webpack.js --mode development && electron .",
+    "dev:react": "NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js --mode development",
     "test": "jest"
   },
   "keywords": [],
