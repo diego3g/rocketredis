@@ -5,7 +5,13 @@ interface WindowSize {
   height: number;
 }
 
-export function useWindowSize (): WindowSize {
+interface UseWindowSizeOptions {
+  watch?: boolean;
+}
+
+export function useWindowSize ({
+  watch = true
+}: UseWindowSizeOptions): WindowSize {
   function getSize () {
     return {
       width: window.innerWidth,
@@ -20,10 +26,12 @@ export function useWindowSize (): WindowSize {
       setWindowSize(getSize())
     }
 
-    window.addEventListener('resize', handleResize)
+    if (watch) {
+      window.addEventListener('resize', handleResize)
 
-    return () => {
-      window.removeEventListener('resize', handleResize)
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
     }
   }, [])
 

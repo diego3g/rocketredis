@@ -5,7 +5,13 @@ import { Container, Connections } from './styles'
 
 const Sidebar: React.FC = () => {
   return (
-    <Container className="app-sidebar">
+    <Container
+      width={300}
+      height={Infinity}
+      minConstraints={[240, Infinity]}
+      maxConstraints={[300, Infinity]}
+      className="app-sidebar"
+    >
       <Connections>
         <header>
           <strong>CONNECTIONS</strong>

@@ -2,10 +2,6 @@ import styled from 'styled-components'
 import { ResizableBox } from 'react-resizable'
 
 export const Container = styled(ResizableBox).attrs({
-  width: 300,
-  height: Infinity,
-  minConstraints: [240, Infinity],
-  maxConstraints: [Infinity, Infinity],
   resizeHandles: ['e'],
   axis: 'x'
 })`
