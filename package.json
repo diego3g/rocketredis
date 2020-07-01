@@ -25,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "babel-loader": "^8.1.0",
+    "cross-env": "^7.0.2",
     "electron": "^8.2.2",
     "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
@@ -47,7 +48,6 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "cross-env": "^7.0.2",
     "electron-store": "^5.2.0",
     "polished": "^3.6.5",
     "react": "^16.13.1",
