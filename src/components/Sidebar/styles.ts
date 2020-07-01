@@ -25,11 +25,23 @@ export const Connections = styled.div`
     button {
       background: transparent;
       border: 0;
-      color: ${props => props.theme.colors.grey};
+      color: ${props => props.theme.colors.green};
+      padding: 4px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+      transition: opacity 0.2s;
 
       svg {
         width: 14px;
         height: 14px;
+      }
+
+      &:hover {
+        opacity: 0.8;
       }
     }
   }

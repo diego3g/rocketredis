@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { remote } from 'electron'
 import os from 'os'
-import { FiX, FiMinus, FiMaximize2 } from 'react-icons/fi'
+import { FiX, FiMinus, FiMaximize2, FiSquare } from 'react-icons/fi'
 
 import { Container, WindowActions, MacActionButton, DefaultActionButton } from './styles'
 import { useStoreValue } from '../../hooks/useStoreValue'
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
             <FiMinus />
           </DefaultActionButton>
           <DefaultActionButton onClick={handleMaximize}>
-            <FiMaximize2 />
+            <FiSquare />
           </DefaultActionButton>
           <DefaultActionButton onClick={handleCloseWindow}>
             <FiX />

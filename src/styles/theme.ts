@@ -5,7 +5,7 @@ export const defaultTheme = {
     white: '#E1E1E6',
     grey: shade(0.3, '#E1E1E6'),
     opaque: '#41414D',
-    purple: '#988bc7',
+    purple: '#6633cc',
     purpleDark: '#5A4B81',
     green: '#67e480',
     orange: '#E89E64',

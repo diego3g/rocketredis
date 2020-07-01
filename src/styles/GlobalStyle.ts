@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: 0;
   }
 
   body {
@@ -46,5 +47,30 @@ export const GlobalStyle = createGlobalStyle`
     padding-right: 6px;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    width: 360px;
+    background: ${props => props.theme.colors.background.dark};
+    border: 1px solid ${props => props.theme.colors.background.lightest};
+    padding: 16px;
+    border-radius: 4px;
+
+    &:focus {
+      outline: 0;
+    }
   }
 `

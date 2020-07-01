@@ -10,7 +10,12 @@ import ConnectionDetails from './components/ConnectionDetails'
 import Connection from './components/Connection'
 
 const mainElement = document.createElement('div')
+const modalElement = document.createElement('div')
+
+modalElement.id = 'modal'
+
 document.body.appendChild(mainElement)
+document.body.appendChild(modalElement)
 
 const Container = styled.div`
   width: 100vw;
