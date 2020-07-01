@@ -18,7 +18,6 @@ const Header: React.FC = () => {
 
     if (!window.isMaximized()) {
       window.maximize()
-      console.log('is window maximized?', window.isMaximized())
     } else {
       window.unmaximize()
     }
