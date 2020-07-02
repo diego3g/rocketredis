@@ -6,3 +6,7 @@ A beautiful Redis GUI [UNDER DEVELOPMENT].
 
 ![Rocket Redis](/.github/screenshot.png)
 
+## TODO
+
+- [ ] Create new Redis connection
+
