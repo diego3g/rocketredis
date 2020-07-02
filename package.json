@@ -4,8 +4,10 @@
   "description": "A beautiful Redis GUI.",
   "main": "./dist/main.js",
   "scripts": {
+    "dev": "npm-run-all -p dev:react electron:serve",
     "dev:electron": "cross-env NODE_ENV=development webpack --config webpack/electron.webpack.js --mode development && electron .",
     "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js --mode development",
+    "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
     "test": "jest"
   },
   "keywords": [],
@@ -54,6 +56,7 @@
     "@unform/web": "^2.1.3",
     "electron-store": "^5.2.0",
     "ioredis": "^4.17.3",
+    "npm-run-all": "^4.1.5",
     "polished": "^3.6.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -63,6 +66,7 @@
     "react-spring": "^8.0.27",
     "react-use": "^15.3.2",
     "styled-components": "^5.1.1",
-    "uuidv4": "^6.1.1"
+    "uuidv4": "^6.1.1",
+    "wait-on": "^5.0.1"
   }
 }
