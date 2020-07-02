@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar'
 import CodeView from './components/CodeView'
 import ConnectionDetails from './components/ConnectionDetails'
 import Connection from './components/Connection'
+import AppProvider from './context'
 
 const mainElement = document.createElement('div')
 const modalElement = document.createElement('div')
@@ -37,16 +38,18 @@ const Content = styled.div`
 const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container>
-        <Header />
-        <Content>
-          <Sidebar />
-          <Connection>
-            <ConnectionDetails />
-            <CodeView />
-          </Connection>
-        </Content>
-      </Container>
+      <AppProvider>
+        <Container>
+          <Header />
+          <Content>
+            <Sidebar />
+            <Connection>
+              <ConnectionDetails />
+              <CodeView />
+            </Connection>
+          </Content>
+        </Container>
+      </AppProvider>
       <GlobalStyle />
     </ThemeProvider>
   )
