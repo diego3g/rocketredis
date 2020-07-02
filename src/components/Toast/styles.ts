@@ -67,6 +67,12 @@ export const Container = styled(animated.div)<ContainerProps>`
     border: 0;
     background: transparent;
     color: inherit;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   ${props =>
