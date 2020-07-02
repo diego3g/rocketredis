@@ -1,7 +1,9 @@
 import styled, { keyframes } from 'styled-components'
 
+import { defaultTheme } from '../../styles/theme'
+
 interface ContainerProps {
-  color: 'grey' | 'opaque' | 'purple' | 'green' | 'orange' | 'pink' | 'cyan' | 'red' | 'yellow';
+  color: keyof typeof defaultTheme.colors;
 }
 
 export const Container = styled.button<ContainerProps>`

@@ -12,13 +12,13 @@ export const defaultTheme = {
     pink: '#FF79C6',
     cyan: '#78D1E1',
     red: '#E96379',
-    yellow: '#e7de79',
-    background: {
-      lightest: '#252131',
-      lighter: '#201B2D',
-      dark: '#191622',
-      darker: '#15121E',
-      darkest: '#13111B'
-    }
+    yellow: '#e7de79'
+  },
+  backgrounds: {
+    lightest: '#252131',
+    lighter: '#201B2D',
+    dark: '#191622',
+    darker: '#15121E',
+    darkest: '#13111B'
   }
 }

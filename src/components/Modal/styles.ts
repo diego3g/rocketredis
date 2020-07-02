@@ -11,6 +11,6 @@ export const Container = styled.div`
     height: 1px;
     width: 100%;
     border: 0;
-    background: ${props => props.theme.colors.background.lightest};
+    background: ${props => props.theme.backgrounds.lightest};
   }
 `

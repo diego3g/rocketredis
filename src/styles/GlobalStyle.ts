@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     &::before {
       width: 1px;
       height: 24px;
-      background: ${props => props.theme.colors.background.lightest};
+      background: ${props => props.theme.backgrounds.lightest};
       content: '';
     }
   }
@@ -64,8 +64,8 @@ export const GlobalStyle = createGlobalStyle`
 
   .modal-content {
     width: 360px;
-    background: ${props => props.theme.colors.background.dark};
-    border: 1px solid ${props => props.theme.colors.background.lightest};
+    background: ${props => props.theme.backgrounds.dark};
+    border: 1px solid ${props => props.theme.backgrounds.lightest};
     padding: 16px;
     border-radius: 4px;
 
