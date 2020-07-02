@@ -1,15 +1,15 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Rectangle } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
+import { getWindowBounds, setWindowBounds } from '../src/utils/windowBoundsController'
 
 let mainWindow: Electron.BrowserWindow | null
 
 function createWindow () {
   mainWindow = new BrowserWindow({
-    width: 1100,
+    ...getWindowBounds(),
     minWidth: 1000,
     minHeight: 600,
-    height: 700,
     frame: false,
     transparent: true,
     webPreferences: {
@@ -28,6 +28,10 @@ function createWindow () {
       })
     )
   }
+
+  mainWindow.on('close', () => {
+    setWindowBounds(mainWindow?.getBounds())
+  })
 
   mainWindow.on('closed', () => {
     mainWindow = null
