@@ -1,4 +1,4 @@
-import { store } from '../store'
+import { config } from '../store/config'
 import { Rectangle } from 'electron'
 
 export const getWindowBounds = function (): Rectangle {
@@ -7,7 +7,7 @@ export const getWindowBounds = function (): Rectangle {
     height,
     x,
     y
-  } = store.get('windowBounds') as Rectangle
+  } = config.get('windowBounds') as Rectangle
 
   return {
     width: width || 1100,
@@ -28,7 +28,7 @@ export const setWindowBounds = function (bounds: Rectangle | undefined): void{
     y
   } = bounds
 
-  store.set('windowBounds', {
+  config.set('windowBounds', {
     width: width || 1100,
     height: height || 700,
     x,

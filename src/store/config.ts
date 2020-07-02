@@ -17,7 +17,7 @@ export const schema = {
   }
 }
 
-export const store = new Store({
+export const config = new Store({
   schema,
   watch: true
 })

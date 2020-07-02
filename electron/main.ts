@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Rectangle } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 import { getWindowBounds, setWindowBounds } from '../src/utils/windowBoundsController'
