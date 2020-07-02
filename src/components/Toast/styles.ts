@@ -27,12 +27,17 @@ export const Container = styled(animated.div)<ContainerProps>`
 
   position: relative;
   padding: 16px 30px 16px 16px;
+  margin: 0 24px 8px 0;
   border-radius: 4px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 
   display: flex;
 
   ${props => toastTypes[props.type]}
+
+  &:first-child {
+    margin-top: 24px;
+  }
 
   svg {
     margin: 3px 12px 0 0;
