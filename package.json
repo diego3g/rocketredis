@@ -8,7 +8,7 @@
     "dev:electron": "cross-env NODE_ENV=development webpack --config webpack/electron.webpack.js --mode development && electron .",
     "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js --mode development",
     "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
-    "lint": "eslint './**/*.tsx' './**/*.ts' './**/*.js'",
+    "lint": "eslint --ext .tsx,.ts,.js src/ electron/",
     "test": "jest --passWithNoTests"
   },
   "keywords": [],
