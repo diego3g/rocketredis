@@ -1,11 +1,12 @@
 import React, { ButtonHTMLAttributes } from 'react'
 
+import { defaultTheme } from '../../styles/theme'
 import { Container, Loading } from './styles'
 import { FiLoader } from 'react-icons/fi'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
-  color: 'grey' | 'opaque' | 'purple' | 'green' | 'orange' | 'pink' | 'cyan' | 'red' | 'yellow';
+  color: keyof typeof defaultTheme.colors;
 }
 
 const Button: React.FC<ButtonProps> = ({

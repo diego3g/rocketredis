@@ -13,7 +13,7 @@ export const Container = styled.header`
   align-items: center;
   justify-content: center;
 
-  border-bottom: 1px solid ${props => props.theme.colors.background.lightest};
+  border-bottom: 1px solid ${props => props.theme.backgrounds.lightest};
 
   strong {
     font-size: 14px;

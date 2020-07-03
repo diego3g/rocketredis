@@ -5,8 +5,8 @@ export const Container = styled(ResizableBox).attrs({
   resizeHandles: ['e'],
   axis: 'x'
 })`
-  background: ${props => props.theme.colors.background.darker};
-  border-right: 1px solid ${props => props.theme.colors.background.lightest};
+  background: ${props => props.theme.backgrounds.darker};
+  border-right: 1px solid ${props => props.theme.backgrounds.lightest};
 `
 
 export const Connections = styled.div`

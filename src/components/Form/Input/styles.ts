@@ -24,8 +24,8 @@ export const Container = styled.div`
     font-size: 16px;
     color: ${props => props.theme.colors.white};
     padding: 0 16px;
-    background: ${props => props.theme.colors.background.darkest};
-    border: 1px solid ${props => props.theme.colors.background.lighter};
+    background: ${props => props.theme.backgrounds.darkest};
+    border: 1px solid ${props => props.theme.backgrounds.lighter};
 
     transition: border 0.2s;
 
