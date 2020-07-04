@@ -1,6 +1,6 @@
 import Redis, { RedisOptions, Redis as TRedis } from 'ioredis'
 
-export function testConnection (options: RedisOptions): Promise<TRedis> {
+export function createRedisConnection (options: RedisOptions): Promise<TRedis> {
   return new Promise((resolve, reject) => {
     const connection = new Redis({
       enableReadyCheck: true,

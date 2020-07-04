@@ -9,7 +9,7 @@ import { FiActivity, FiPlus } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
 import Input from '../Form/Input'
 import InputGroup from '../Form/InputGroup'
-import { testConnection } from '../../services/connection/TestConnectionService'
+import { createRedisConnection } from '../../services/connection/RedisConnectionService'
 import { useToast } from '../../context/toast'
 import { Redis } from 'ioredis'
 
@@ -56,7 +56,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, onRequestClose: sto
       storeNewConnection && storeNewConnection(connection)
     }
 
-    testConnection(extractConnectionParamsFromForm())
+    createRedisConnection(extractConnectionParamsFromForm())
       .then(showSuccessMessageAndStoreConnection)
       .catch(showErrorMessage)
       .finally(toggleCreateConnectionLoading)
@@ -73,7 +73,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, onRequestClose: sto
 
     toggleTestConnectionLoading()
 
-    testConnection(extractConnectionParamsFromForm())
+    createRedisConnection(extractConnectionParamsFromForm())
       .then(showSuccessMessage)
       .catch(showErrorMessage)
       .finally(toggleTestConnectionLoading)
