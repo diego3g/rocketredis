@@ -1,6 +1,6 @@
 {
   "src/**/*.{js,ts,tsx}": [
-    "eslint --ext js,ts,tsx src/ electron/ --fix",
+    "eslint --ext js,ts,tsx src/ electron/ --fix" ,
     "cross-env CI=true yarn test --findRelatedTests --bail"
   ]
 }
