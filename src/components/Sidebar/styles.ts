@@ -46,3 +46,9 @@ export const Connections = styled.div`
     }
   }
 `
+
+export const Connection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`

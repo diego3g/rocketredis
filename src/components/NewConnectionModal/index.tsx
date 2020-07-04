@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import Modal, { ModalProps } from '../Modal'
 import Button from '../Button'
 import { Form } from '@unform/web'
@@ -11,50 +11,72 @@ import Input from '../Form/Input'
 import InputGroup from '../Form/InputGroup'
 import { testConnection } from '../../services/connection/TestConnectionService'
 import { useToast } from '../../context/toast'
+import { Redis } from 'ioredis'
 
 interface ConnectionFormData {
   host: string;
-  port: string;
+  port: number;
   password: string;
 }
 
-const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
+const NewConnectionModal: React.FC<ModalProps> = ({ visible, onRequestClose: storeNewConnection, ...rest }) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
 
-  const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
-  const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(false)
+  const [isTestConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
+  const [isCreateConnectionLoading, toggleCreateConnectionLoading] = useToggle(false)
 
-  const handleCreateConnection = useCallback((data: ConnectionFormData) => {
-    console.log(data)
+  const extractConnectionParamsFromForm = (): ConnectionFormData => {
+    const { host, port, password } = (formRef.current?.getData() ?? {}) as ConnectionFormData
+
+    return {
+      host: String(host),
+      password: String(password),
+      port: Number(port)
+    }
+  }
+
+  const showErrorMessage = (err: unknown) => {
+    addToast({
+      type: 'error',
+      title: 'Error occurred',
+      description: `${err}`
+    })
+  }
+
+  const handleCreateConnection = useCallback(() => {
+    toggleCreateConnectionLoading()
+
+    const showSuccessMessageAndStoreConnection = (connection: Redis) => {
+      addToast({
+        type: 'success',
+        title: 'Connection stored'
+      })
+
+      storeNewConnection && storeNewConnection(connection)
+    }
+
+    testConnection(extractConnectionParamsFromForm())
+      .then(showSuccessMessageAndStoreConnection)
+      .catch(showErrorMessage)
+      .finally(toggleCreateConnectionLoading)
   }, [])
 
   const handleTestConnection = useCallback(() => {
-    if (!formRef.current) { return }
-
-    const { host, port, password } = formRef.current.getData() as ConnectionFormData
+    const showSuccessMessage = () => {
+      addToast({
+        type: 'success',
+        title: 'Successfully',
+        description: 'Urrray... You can save your connection now!'
+      })
+    }
 
     toggleTestConnectionLoading()
 
-    testConnection({
-      host,
-      port: Number(port),
-      password
-    }).then(() => {
-      addToast({
-        type: 'success',
-        title: 'Connection successful',
-        description: 'Urrray... You can save your connection now!'
-      })
-    }).catch(() => {
-      addToast({
-        type: 'error',
-        title: 'Error on connection',
-        description: 'Error estabilishing connection with your Redis server'
-      })
-    }).finally(() => {
-      toggleTestConnectionLoading()
-    })
+    testConnection(extractConnectionParamsFromForm())
+      .then(showSuccessMessage)
+      .catch(showErrorMessage)
+      .finally(toggleTestConnectionLoading)
   }, [])
 
   return (
@@ -82,11 +104,11 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
         />
 
         <ActionsContainer>
-          <Button loading={testConnectionLoading} color="purple" onClick={handleTestConnection}>
+          <Button loading={isTestConnectionLoading} color="purple" onClick={handleTestConnection}>
             <FiActivity />
             Testar conexão
           </Button>
-          <Button loading={createConnectionLoading} type="submit" color="pink">
+          <Button loading={isCreateConnectionLoading} type="submit" color="pink">
             <FiPlus />
           Salvar
           </Button>
