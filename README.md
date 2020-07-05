@@ -17,8 +17,8 @@ You'll need [Node.js](https://nodejs.org) installed on your computer in order to
 ```bash
 git clone https://github.com/diego3g/rocketredis.git
 $ cd rocketredis
-$ npm install
-$ npm run dev
+$ yarn install
+$ yarn dev
 ```
 
-Runs the app in the development mode.<br />
+Runs the app in the development mode.<br/>
