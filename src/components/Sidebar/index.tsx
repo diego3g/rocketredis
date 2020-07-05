@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
-import { Container, Connections, Connection } from './styles'
+import { Container, Connections, ConnectionsList } from './styles'
 import NewConnectionModal from '../NewConnectionModal'
 import { Redis } from 'ioredis'
 
@@ -12,12 +12,11 @@ const Sidebar: React.FC = () => {
   // TODO: store connections into storage aka Redux (or other store utility) and/or sync with File system's storage
   const [connections, storeConnection] = useState<Redis[]>([])
 
-  const storeNewConnectionAndCloseModal = (connection?: unknown) => {
-    if (isRedisConnection(connection)) {
-      storeConnection(connections => [...connections, connection])
-    }
+  const storeNewConnectionAndCloseModal = (connection: Redis) => {
+    storeConnection(connections => [...connections, connection])
 
-    toggleCreateModalOpen()
+    // TODO: doesn't work
+    toggleCreateModalOpen(false)
   }
 
   return (
@@ -36,38 +35,25 @@ const Sidebar: React.FC = () => {
               <FiPlusCircle />
             </button>
           </header>
-          <div>
+          <ConnectionsList>
             {connections.map((connection, key) =>
-              <Connection key={key}>
-                <div>Status: {connection.status}</div>
-              </Connection>
+              <div key={key}>
+                <div><b>Status</b>: {connection.status}</div>
+                <div><b>Name</b>: {connection.options.name}</div>
+              </div>
             )}
-          </div>
+          </ConnectionsList>
         </Connections>
       </Container>
 
-      <NewConnectionModal visible={isCreateModalOpen} onRequestClose={storeNewConnectionAndCloseModal} />
+      <NewConnectionModal
+        visible={isCreateModalOpen}
+        storedConnections={connections}
+        onRequestClose={toggleCreateModalOpen}
+        onStoreNewConnection={storeNewConnectionAndCloseModal}
+      />
     </>
   )
 }
 
 export default Sidebar
-
-function isRedisConnection<T> (connection?: UnknownRecord | unknown): connection is Redis {
-  if (!connection) {
-    return false
-  }
-
-  // dirty hack, https://github.com/Microsoft/TypeScript/issues/21732
-  const conn = connection as UnknownRecord
-
-  const hasHostAndPort = (connection: UnknownRecord): boolean => {
-    return 'host' in connection && 'port' in connection
-  }
-
-  return conn.options
-    ? hasHostAndPort(conn.options as UnknownRecord)
-    : hasHostAndPort(conn)
-}
-
-type UnknownRecord = Record<string, unknown>

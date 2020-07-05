@@ -11,7 +11,7 @@ export const Container = styled(ResizableBox).attrs({
 
 export const Connections = styled.div`
   padding: 16px;
-  
+
   header {
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@ export const Connections = styled.div`
       font-size: 12px;
       color: ${props => props.theme.colors.grey};
     }
-    
+
     button {
       background: transparent;
       border: 0;
@@ -47,8 +47,13 @@ export const Connections = styled.div`
   }
 `
 
-export const Connection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+export const ConnectionsList = styled.div`
+  margin: 25px 15px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .9em;
+  }
 `

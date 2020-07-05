@@ -5,7 +5,7 @@ import { Container } from './styles'
 
 export interface ModalProps {
   visible?: boolean;
-  onRequestClose?: (arg?: unknown | unknown[]) => void;
+  onRequestClose?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
