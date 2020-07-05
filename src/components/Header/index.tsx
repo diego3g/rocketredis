@@ -37,10 +37,7 @@ const Header: React.FC = () => {
 
   const handleFullScreen = useCallback(() => {
     const window = remote.getCurrentWindow()
-    if (window.isFullScreen()) {
-      return window.setFullScreen(false)
-    }
-    return window.setFullScreen(true)
+    window.setFullScreen(!window.isFullScreen())
   }, [])
 
   const useMacOSWindowActionButtons = useConfig('useMacOSWindowActionButtons')
