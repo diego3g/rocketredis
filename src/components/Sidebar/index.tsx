@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
-import { Container, Connections, ConnectionsList } from './styles'
+import { Container, Connections, ConnectionsList, FilterContainer } from './styles'
 import NewConnectionModal from '../NewConnectionModal'
 import { Redis } from 'ioredis'
 
@@ -11,6 +11,7 @@ const Sidebar: React.FC = () => {
 
   // TODO: store connections into storage aka Redux (or other store utility) and/or sync with File system's storage
   const [connections, storeConnection] = useState<Redis[]>([])
+  const [filter, setFilter] = useState<string>('')
 
   const storeNewConnectionAndCloseModal = (connection: Redis) => {
     storeConnection(connections => [...connections, connection])
@@ -18,6 +19,23 @@ const Sidebar: React.FC = () => {
     // TODO: doesn't work
     toggleCreateModalOpen(false)
   }
+
+  const filterConnections = useCallback((connection: Redis): boolean => {
+    const valueToFilter = filter.toLowerCase()
+
+    if (!valueToFilter) {
+      return true
+    }
+
+    const paramsToFilter = [
+      connection.options.name,
+      connection.options.host
+    ]
+
+    return !!paramsToFilter
+      .map(p => p?.toLowerCase())
+      .find(n => n?.includes(valueToFilter))
+  }, [filter, connections])
 
   return (
     <>
@@ -35,8 +53,17 @@ const Sidebar: React.FC = () => {
               <FiPlusCircle />
             </button>
           </header>
+          {connections.length > 1 &&
+            <FilterContainer>
+              <input
+                onChange={e => setFilter(e.target.value.trim())}
+                placeholder="Type to filter"
+                type="text"
+              />
+            </FilterContainer>
+          }
           <ConnectionsList>
-            {connections.map((connection, key) =>
+            {connections.filter(filterConnections).map((connection, key) =>
               <div key={key}>
                 <div><b>Status</b>: {connection.status}</div>
                 <div><b>Name</b>: {connection.options.name}</div>
