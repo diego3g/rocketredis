@@ -35,6 +35,14 @@ const Header: React.FC = () => {
     window.minimize()
   }, [])
 
+  const handleFullScreen = useCallback(() => {
+    const window = remote.getCurrentWindow()
+    if (window.isFullScreen()) {
+      return window.setFullScreen(false)
+    }
+    return window.setFullScreen(true)
+  }, [])
+
   const useMacOSWindowActionButtons = useConfig('useMacOSWindowActionButtons')
 
   const shouldUseMacOSWindowActions = useMemo(() => {
@@ -53,7 +61,7 @@ const Header: React.FC = () => {
           <MacActionButton color="minimize" onClick={handleMinimize}>
             <FiMinus />
           </MacActionButton>
-          <MacActionButton color="maximize" onClick={handleMaximize}>
+          <MacActionButton color="maximize" onClick={handleFullScreen}>
             <FiMaximize2 />
           </MacActionButton>
         </WindowActions>
