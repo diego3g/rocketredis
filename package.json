@@ -43,8 +43,10 @@
     "eslint-plugin-react": "^7.20.1",
     "eslint-plugin-standard": "^4.0.1",
     "html-webpack-plugin": "^4.2.0",
+    "husky": "^4.2.5",
     "jest": "^26.1.0",
     "json-schema-typed": "^7.0.3",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.5",
@@ -69,5 +71,15 @@
     "styled-components": "^5.1.1",
     "uuidv4": "^6.1.1",
     "wait-on": "^5.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
