@@ -9,6 +9,7 @@
     "standard",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier/@typescript-eslint"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,7 +18,8 @@
       "jsx": true
     },
     "ecmaVersion": 11,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "plugins": [
     "react",
@@ -33,7 +35,9 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off"
   },
   "settings": {
     "import/resolver": {

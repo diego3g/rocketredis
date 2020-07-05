@@ -14,8 +14,8 @@
     "outDir": "./dist",
     "strict": true ,
     "esModuleInterop": true,
-    "types": [
-      "src/styles/styled.d.ts"
-    ]
-  }
+    "types": ["node"]
+  },
+  "include": ["src/**/*", "electron/**/*"],
+  "exclude": ["node_modules"]
 }
