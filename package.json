@@ -71,5 +71,16 @@
     "styled-components": "^5.1.1",
     "uuidv4": "^6.1.1",
     "wait-on": "^5.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "git add",
+      "eslint --fix"
+    ]
   }
 }
