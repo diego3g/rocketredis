@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:6.0
+    command: redis-server --requirepass redis
+    ports:
+      - "6379:6379"
