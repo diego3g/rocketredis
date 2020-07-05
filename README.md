@@ -15,7 +15,7 @@ This repository is currently under development. If you want to contribute please
 You'll need [Node.js](https://nodejs.org) installed on your computer in order to build this app.
 
 ```bash
-git clone https://github.com/electron/electron-api-demos
+git clone https://github.com/diego3g/rocketredis.git
 $ cd electron-api-demos
 $ npm install
 $ npm run dev
