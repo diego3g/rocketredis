@@ -16,7 +16,7 @@ You'll need [Node.js](https://nodejs.org) installed on your computer in order to
 
 ```bash
 git clone https://github.com/diego3g/rocketredis.git
-$ cd electron-api-demos
+$ cd rocketredis
 $ npm install
 $ npm run dev
 ```
