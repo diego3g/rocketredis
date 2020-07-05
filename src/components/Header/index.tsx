@@ -16,6 +16,11 @@ const Header: React.FC = () => {
   const handleMaximize = useCallback(() => {
     const window = remote.getCurrentWindow()
 
+    const isMacSystem = os.platform() === 'darwin'
+    if (isMacSystem) {
+      return window.setFullScreen(!window.isFullScreen())
+    }
+
     const { width: currentWidth, height: currentHeight } = window.getBounds()
 
     const { width: maxWidth, height: maxHeight } = remote.screen.getPrimaryDisplay().workAreaSize
@@ -33,11 +38,6 @@ const Header: React.FC = () => {
     const window = remote.getCurrentWindow()
 
     window.minimize()
-  }, [])
-
-  const handleFullScreen = useCallback(() => {
-    const window = remote.getCurrentWindow()
-    window.setFullScreen(!window.isFullScreen())
   }, [])
 
   const useMacOSWindowActionButtons = useConfig('useMacOSWindowActionButtons')
@@ -58,7 +58,7 @@ const Header: React.FC = () => {
           <MacActionButton color="minimize" onClick={handleMinimize}>
             <FiMinus />
           </MacActionButton>
-          <MacActionButton color="maximize" onClick={handleFullScreen}>
+          <MacActionButton color="maximize" onClick={handleMaximize}>
             <FiMaximize2 />
           </MacActionButton>
         </WindowActions>
