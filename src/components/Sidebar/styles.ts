@@ -58,7 +58,7 @@ export const ConnectionsList = styled.div`
   }
 `
 export const FilterContainer = styled.div`
-  width: 100;
+  width: 100%;
   margin: 10px 0;
   padding: 0 10px;
 
