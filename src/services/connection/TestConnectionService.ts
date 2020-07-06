@@ -1,24 +1,33 @@
-import Redis, { RedisOptions } from 'ioredis'
+import { Redis } from 'ioredis'
+import redisConnection from './RedisConnection'
 
-export function testConnection (options: RedisOptions): Promise<void> {
+interface IRedisConnectionOptions {
+  host: string;
+  port: number;
+  password?: string;
+  useSsh?: boolean;
+  sshHost?: string;
+  sshPort?: number;
+  sshUser?: string;
+  sshKey?: string;
+  sshKeyPassphrase?: string;
+  sshPassword?: string;
+}
+
+export function testConnection (options: IRedisConnectionOptions): Promise<void> {
   return new Promise((resolve, reject) => {
-    const connection = new Redis(options.port, options.host, {
-      enableReadyCheck: true,
-      connectTimeout: 3000,
-      password: options.password,
-      retryStrategy () {
-        return null
-      }
-    })
+    redisConnection(options)
+      .then((connection: Redis) => {
+        connection.once('ready', () => {
+          resolve()
+          connection.disconnect()
+        })
 
-    connection.once('ready', () => {
-      resolve()
-
-      connection.disconnect()
-    })
-
-    connection.once('error', () => {
-      reject(new Error())
-    })
+        connection.once('error', () => {
+          reject(new Error())
+        })
+      }).catch((error) => {
+        reject(error)
+      })
   })
 }

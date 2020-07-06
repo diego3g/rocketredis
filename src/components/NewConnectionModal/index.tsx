@@ -16,6 +16,11 @@ interface ConnectionFormData {
   host: string;
   port: string;
   password: string;
+
+  sshHost: string;
+  sshPort: string;
+  sshUser: string;
+  sshPassword: string;
 }
 
 const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
@@ -32,14 +37,20 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
   const handleTestConnection = useCallback(() => {
     if (!formRef.current) { return }
 
-    const { host, port, password } = formRef.current.getData() as ConnectionFormData
+    const { host, port, password, sshHost, sshPort, sshUser, sshPassword } = formRef.current.getData() as ConnectionFormData
 
     toggleTestConnectionLoading()
 
     testConnection({
       host,
       port: Number(port),
-      password
+      password,
+
+      useSsh: !!(sshHost && sshUser && sshPort),
+      sshHost,
+      sshPort: Number(sshPort),
+      sshUser,
+      sshPassword
     }).then(() => {
       addToast({
         type: 'success',
@@ -64,7 +75,8 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
       <Form
         initialData={{
           host: 'localhost',
-          port: '6379'
+          port: '6379',
+          sshPort: '22'
         }}
         ref={formRef}
         onSubmit={handleCreateConnection}
@@ -79,6 +91,19 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
           name="password"
           label="Password"
           placeholder="Leave empty for no password"
+        />
+
+        <br />
+        <InputGroup>
+          <Input name="sshHost" label="SSH Host" />
+          <Input name="sshPort" label="SSH Port" />
+        </InputGroup>
+
+        <Input name="sshUser" label="SSH User" />
+        <Input
+          type="password"
+          name="sshPassword"
+          label="SSH Password"
         />
 
         <ActionsContainer>
