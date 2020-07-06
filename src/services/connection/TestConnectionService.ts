@@ -17,7 +17,7 @@ interface IRedisConnectionOptions {
 export function testConnection (options: IRedisConnectionOptions): Promise<void> {
   return new Promise((resolve, reject) => {
     redisConnection(options)
-      .then((connection: any) => {
+      .then((connection: Redis) => {
         connection.once('ready', () => {
           resolve()
           connection.disconnect()

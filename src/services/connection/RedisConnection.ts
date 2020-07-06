@@ -1,4 +1,4 @@
-import net from 'net'
+import net, { Server } from 'net'
 import { Client } from 'ssh2'
 import Redis from 'ioredis'
 
@@ -37,8 +37,8 @@ export default function redisConnection (options: IRedisConnectionOptions) {
     const connectionSshClient = new Client()
 
     connectionSshClient.on('ready', function () {
-      const server: any = net.createServer(function (socket: any) {
-        connectionSshClient.forwardOut(socket.remoteAddress, socket.remotePort, options.host, options.port, function (error, stream) {
+      const server: Server = net.createServer(function (socket) {
+        connectionSshClient.forwardOut(socket.remoteAddress as string, socket.remotePort as number, options.host, options.port, function (error, stream) {
           if (error) {
             socket.end()
             return console.error('')
