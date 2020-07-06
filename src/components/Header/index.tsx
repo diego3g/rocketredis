@@ -16,6 +16,11 @@ const Header: React.FC = () => {
   const handleMaximize = useCallback(() => {
     const window = remote.getCurrentWindow()
 
+    const isMacSystem = os.platform() === 'darwin'
+    if (isMacSystem) {
+      return window.setFullScreen(!window.isFullScreen())
+    }
+
     const { width: currentWidth, height: currentHeight } = window.getBounds()
 
     const { width: maxWidth, height: maxHeight } = remote.screen.getPrimaryDisplay().workAreaSize
