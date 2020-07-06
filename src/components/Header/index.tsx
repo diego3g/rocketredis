@@ -46,7 +46,7 @@ const Header: React.FC = () => {
       <strong>Rocket Redis</strong>
 
       {shouldUseMacOSWindowActions ? (
-        <WindowActions position="left">
+        <WindowActions position="left" shouldShowIconsOnHover>
           <MacActionButton color="close" onClick={handleCloseWindow}>
             <FiX />
           </MacActionButton>

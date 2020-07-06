@@ -24,6 +24,7 @@ export const Container = styled.header`
 
 interface WindowActionsProps {
   position: 'left' | 'right';
+  shouldShowIconsOnHover?: boolean;
 }
 
 export const WindowActions = styled.div<WindowActionsProps>`
@@ -34,6 +35,10 @@ export const WindowActions = styled.div<WindowActionsProps>`
   align-items: center;
 
   ${props => props.position === 'left' ? css`left: 16px;` : css`right: 16px;`};
+  ${props => props.shouldShowIconsOnHover && css`
+    &:hover svg {
+    display: block;
+  }`}
 `
 
 interface MacActionButtonProps {
