@@ -9,7 +9,12 @@
     "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js --mode development",
     "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
     "lint": "eslint --ext .tsx,.ts,.js src/ electron/",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "build": "npm-run-all -p build:*",
+    "build:electron": "cross-env NODE_ENV=production webpack --config webpack/electron.webpack.js --mode production",
+    "build:react": "cross-env NODE_ENV=production webpack --config webpack/react.webpack.js --mode production",
+    "postinstall": "electron-builder install-app-deps",
+    "package": "yarn build && electron-builder build --publish never"
   },
   "keywords": [],
   "author": "Diego Fernandes <diego.schell.f@gmail.com>",
@@ -32,6 +37,7 @@
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
     "electron": "^8.2.2",
+    "electron-builder": "^22.7.0",
     "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
@@ -58,6 +64,7 @@
     "@unform/core": "^2.1.3",
     "@unform/web": "^2.1.3",
     "electron-store": "^5.2.0",
+    "electron-updater": "^4.3.1",
     "ioredis": "^4.17.3",
     "npm-run-all": "^4.1.5",
     "polished": "^3.6.5",
@@ -81,5 +88,28 @@
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ]
+  },
+  "build": {
+    "appId": "com.diego3g.rocketredis",
+    "productName": "Rocket Redis",
+    "files": [
+      "dist/"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "dmg": {
+      "icon": false
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    }
   }
 }

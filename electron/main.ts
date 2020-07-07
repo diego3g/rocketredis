@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import * as path from 'path'
 import * as url from 'url'
 import { getWindowBounds, setWindowBounds } from '../src/utils/windowBoundsController'
@@ -22,7 +23,7 @@ function createWindow () {
   } else {
     mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, '../index.html'),
+        pathname: path.join(__dirname, 'renderer/index.html'),
         protocol: 'file:',
         slashes: true
       })
@@ -38,5 +39,8 @@ function createWindow () {
   })
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+  autoUpdater.checkForUpdatesAndNotify()
+})
 app.allowRendererProcessReuse = true
