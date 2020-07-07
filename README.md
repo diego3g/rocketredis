@@ -1,8 +1,18 @@
-# <img src=".github/rocket.png" width="40"> Rocket Redis
+<p align="center">
+  <img src="https://storage.googleapis.com/golden-wind/rocketredis/rocketredis.png" width="200" />
+</p>
 
-A beautiful Redis GUI <b>UNDER DEVELOPMENT</b>.
+<h1 align="center">
+  Rocket Redis
+</h1>
 
-## Screenshot
+Rocket Redis is a Graphic User Interface for managing Redis databases with ease.
+
+🚧 **Rocket Redis is under development** 🚧
+
+## Layout
+
+You can find the application UI design here: https://www.figma.com/file/YRor24p0TmTxcjl5L86jGb/Rocket-Redis?node-id=1%3A2
 
 ![Rocket Redis](/.github/screenshot.png)
 
