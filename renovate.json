@@ -1,5 +1,7 @@
 {
-  "extends": [
-    "config:base"
-  ]
+  "extends": ["config:base"],
+  "semanticCommits": true,
+  "stabilityDays": 3,
+  "prCreation": "not-pending",
+  "labels": ["Type: Chore"]
 }
