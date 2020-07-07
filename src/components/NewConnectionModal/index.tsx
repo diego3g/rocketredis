@@ -23,7 +23,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
   const { addToast } = useToast()
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
-  const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(false)
+  const [createConnectionLoading] = useToggle(false)
 
   const handleCreateConnection = useCallback((data: ConnectionFormData) => {
     console.log(data)

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, CSSProperties } from 'react'
 import {
   FiAlertCircle,
   FiCheckCircle,
@@ -11,7 +11,7 @@ import { Container } from './styles'
 
 interface ToastProps {
   toast: ToastMessage;
-  style: any;
+  style: CSSProperties;
 }
 
 const icons = {
