@@ -4,7 +4,7 @@ import { GlobalStyle } from './styles/GlobalStyle'
 import { defaultTheme } from './styles/theme'
 import styled, { ThemeProvider } from 'styled-components'
 import Header from './components/Header'
-import Sidebar from './components/Sidebar'
+import ConnectionList from './components/ConnectionList'
 import CodeView from './components/CodeView'
 import ConnectionDetails from './components/ConnectionDetails'
 import Connection from './components/Connection'
@@ -42,7 +42,7 @@ const App = () => {
         <Container>
           <Header />
           <Content>
-            <Sidebar />
+            <ConnectionList />
             <Connection>
               <ConnectionDetails />
               <CodeView />
