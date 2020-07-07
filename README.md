@@ -14,7 +14,7 @@ Rocket Redis is a Graphic User Interface for managing Redis databases with ease.
 
 You can find the application UI design here: https://www.figma.com/file/YRor24p0TmTxcjl5L86jGb/Rocket-Redis?node-id=1%3A2
 
-![Rocket Redis](/.github/screenshot.png)
+![Rocket Redis](/.github/layout.png)
 
 ## Contributing
 
