@@ -1,16 +1,32 @@
 import { useField } from '@unform/core'
-import React, { InputHTMLAttributes, useRef, useEffect } from 'react'
+import React, {
+  useState,
+  useCallback,
+  InputHTMLAttributes,
+  useRef,
+  useEffect
+} from 'react'
+import { FiAlertCircle } from 'react-icons/fi'
 
-import { Container } from './styles'
+import { Container, TitleContainer, InputContainer } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   label?: string
+  hint?: string
 }
 
-const Input: React.FC<InputProps> = ({ label, name, ...rest }) => {
+const Input: React.FC<InputProps> = ({ label, name, hint, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { fieldName, registerField, defaultValue } = useField(name)
+  const {
+    fieldName,
+    registerField,
+    defaultValue,
+    error,
+    clearError
+  } = useField(name)
+
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     if (inputRef.current) {
@@ -22,11 +38,37 @@ const Input: React.FC<InputProps> = ({ label, name, ...rest }) => {
     }
   }, [])
 
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true)
+
+    clearError()
+  }, [])
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false)
+  }, [])
+
   return (
     <Container>
-      {label && <label htmlFor={fieldName}>{label}</label>}
+      <TitleContainer>
+        {label && <label htmlFor={fieldName}>{label}</label>}
+        {hint && <small>{hint}</small>}
+      </TitleContainer>
 
-      <input ref={inputRef} defaultValue={defaultValue} {...rest} />
+      <InputContainer
+        isFocused={isFocused}
+        isErrored={!!error}
+        onFocus={handleInputFocus}
+      >
+        <input
+          ref={inputRef}
+          defaultValue={defaultValue}
+          {...rest}
+          onBlur={handleInputBlur}
+        />
+
+        {!!error && <FiAlertCircle />}
+      </InputContainer>
     </Container>
   )
 }

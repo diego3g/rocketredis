@@ -62,7 +62,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .modal-content {
-    width: 360px;
+    width: 500px;
     background: ${props => props.theme.backgrounds.dark};
     border: 1px solid ${props => props.theme.backgrounds.lightest};
     padding: 16px;
