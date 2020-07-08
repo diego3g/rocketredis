@@ -54,7 +54,7 @@ export const GlobalStyle = createGlobalStyle`
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.3);
 
     display: flex;
     justify-content: center;
@@ -64,9 +64,10 @@ export const GlobalStyle = createGlobalStyle`
   .modal-content {
     width: 500px;
     background: ${props => props.theme.backgrounds.dark};
-    border: 1px solid ${props => props.theme.backgrounds.lightest};
+    border: 1px solid #322D41;
     padding: 16px;
     border-radius: 4px;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
 
     &:focus {
       outline: 0;
