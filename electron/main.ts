@@ -11,9 +11,7 @@ import {
 let mainWindow: Electron.BrowserWindow | null
 
 function createWindow() {
-  const icon = nativeImage.createFromPath(
-    `${app.getAppPath()}/assets/icon/128x128.png`
-  )
+  const icon = nativeImage.createFromPath(`${app.getAppPath()}/build/icon.png`)
 
   if (app.dock) {
     app.dock.setIcon(icon)
