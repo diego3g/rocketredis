@@ -10,14 +10,6 @@ import ConnectionDetails from './components/ConnectionDetails'
 import Connection from './components/Connection'
 import AppProvider from './context'
 
-const mainElement = document.createElement('div')
-const modalElement = document.createElement('div')
-
-modalElement.id = 'modal'
-
-document.body.appendChild(mainElement)
-document.body.appendChild(modalElement)
-
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -55,4 +47,4 @@ const App = () => {
   )
 }
 
-render(<App />, mainElement)
+render(<App />, document.getElementById('root'))

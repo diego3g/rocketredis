@@ -37,7 +37,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Rocket Redis'
+      template: path.resolve(rootPath, 'index.html')
     })
   ]
 }
