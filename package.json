@@ -7,7 +7,7 @@
   "author": "Diego Fernandes <diego.schell.f@gmail.com>",
   "main": "./dist/main.js",
   "scripts": {
-    "build": "npm-run-all -p build:*",
+    "build": "rimraf dist && npm-run-all -p build:*",
     "build:electron": "cross-env NODE_ENV=production webpack --config webpack/electron.webpack.js",
     "build:react": "cross-env NODE_ENV=production webpack --config webpack/react.webpack.js",
     "dev": "npm-run-all -p dev:react electron:serve",
@@ -95,6 +95,7 @@
     "lint-staged": "10.2.11",
     "prettier": "2.0.5",
     "react-refresh": "0.8.3",
+    "rimraf": "3.0.2",
     "sort-package-json": "1.44.0",
     "ts-jest": "26.1.1",
     "typescript": "3.9.6",
@@ -110,9 +111,6 @@
     ],
     "mac": {
       "category": "public.app-category.developer-tools"
-    },
-    "dmg": {
-      "icon": false
     },
     "linux": {
       "target": [
