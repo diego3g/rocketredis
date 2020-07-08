@@ -1,15 +1,15 @@
-import React, { useCallback, useMemo } from 'react'
 import { remote } from 'electron'
 import os from 'os'
+import React, { useCallback, useMemo } from 'react'
 import { FiX, FiMinus, FiMaximize2, FiSquare } from 'react-icons/fi'
 
+import { useConfig } from '../../hooks/useConfig'
 import {
   Container,
   WindowActions,
   MacActionButton,
   DefaultActionButton
 } from './styles'
-import { useConfig } from '../../hooks/useConfig'
 
 const Header: React.FC = () => {
   const handleCloseWindow = useCallback(() => {

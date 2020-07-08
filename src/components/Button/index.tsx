@@ -1,8 +1,8 @@
 import React, { ButtonHTMLAttributes } from 'react'
+import { FiLoader } from 'react-icons/fi'
 
 import { defaultTheme } from '../../styles/theme'
 import { Container, Loading } from './styles'
-import { FiLoader } from 'react-icons/fi'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean

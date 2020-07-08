@@ -1,5 +1,6 @@
-import { config } from '../store/config'
 import { Rectangle } from 'electron'
+
+import { config } from '../store/config'
 
 export const getWindowBounds = function (): Rectangle {
   const { width, height, x, y } = config.get('windowBounds') as Rectangle

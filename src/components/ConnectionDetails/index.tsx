@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Container } from './styles'
 import { useWindowSize } from '../../hooks/useWindowSize'
+import { Container } from './styles'
 
 const ConnectionDetails: React.FC = () => {
   const { width } = useWindowSize({ watch: false })

@@ -2,8 +2,8 @@ import React from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
-import { Container, Connections } from './styles'
 import NewConnectionModal from '../NewConnectionModal'
+import { Container, Connections } from './styles'
 
 const ConnectionList: React.FC = () => {
   const [isCreateModalOpen, toggleCreateModalOpen] = useToggle(false)

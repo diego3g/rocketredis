@@ -1,16 +1,17 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { GlobalStyle } from './styles/GlobalStyle'
-import { defaultTheme } from './styles/theme'
-import { ThemeProvider } from 'styled-components'
-import Header from './components/Header'
-import ConnectionList from './components/ConnectionList'
-import CodeView from './components/CodeView'
-import ConnectionDetails from './components/ConnectionDetails'
-import Connection from './components/Connection'
 import Modal from 'react-modal'
+import { ThemeProvider } from 'styled-components'
+
+import CodeView from './components/CodeView'
+import Connection from './components/Connection'
+import ConnectionDetails from './components/ConnectionDetails'
+import ConnectionList from './components/ConnectionList'
+import Header from './components/Header'
 import AppProvider from './context'
+import { GlobalStyle } from './styles/GlobalStyle'
 import { Container, Content } from './styles/Main'
+import { defaultTheme } from './styles/theme'
 
 Modal.setAppElement('#root')
 

@@ -1,16 +1,16 @@
-import React, { useRef, useCallback } from 'react'
-import Modal, { ModalProps } from '../Modal'
-import Button from '../Button'
+import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
+import React, { useRef, useCallback } from 'react'
+import { FiActivity, FiPlus } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
-import { ActionsContainer } from './styles'
-import { FiActivity, FiPlus } from 'react-icons/fi'
-import { FormHandles } from '@unform/core'
+import { useToast } from '../../context/toast'
+import { testConnection } from '../../services/connection/TestConnectionService'
+import Button from '../Button'
 import Input from '../Form/Input'
 import InputGroup from '../Form/InputGroup'
-import { testConnection } from '../../services/connection/TestConnectionService'
-import { useToast } from '../../context/toast'
+import Modal, { ModalProps } from '../Modal'
+import { ActionsContainer } from './styles'
 
 interface ConnectionFormData {
   name: string
