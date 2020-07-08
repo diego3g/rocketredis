@@ -34,16 +34,12 @@ const Toast: React.FC<ToastProps> = ({ toast, style }) => {
   }, [closeToast])
 
   return (
-    <Container
-      type={toast.type}
-      hasDescription={!!toast.description}
-      style={style}
-    >
+    <Container type={toast.type} style={style}>
       {icons[toast.type]}
 
       <div>
         <strong>{toast.title}</strong>
-        {toast.description && <p>{toast.description}</p>}
+        <p>{toast.description}</p>
       </div>
 
       <button type="button" onClick={closeToast}>

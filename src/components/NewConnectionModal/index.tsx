@@ -1,16 +1,17 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import React, { useRef, useCallback } from 'react'
-import { FiActivity, FiPlus } from 'react-icons/fi'
+import { FiActivity, FiSave } from 'react-icons/fi'
 import { useToggle } from 'react-use'
+import * as Yup from 'yup'
 
 import { useToast } from '../../context/toast'
 import { testConnection } from '../../services/connection/TestConnectionService'
+import getValidationErrors from '../../utils/getValidationErrors'
 import Button from '../Button'
 import Input from '../Form/Input'
-import InputGroup from '../Form/InputGroup'
 import Modal, { ModalProps } from '../Modal'
-import { ActionsContainer } from './styles'
+import { ActionsContainer, ButtonGroup, InputGroup } from './styles'
 
 interface ConnectionFormData {
   name: string
@@ -19,16 +20,47 @@ interface ConnectionFormData {
   password: string
 }
 
-const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
+const NewConnectionModal: React.FC<ModalProps> = ({
+  visible,
+  onRequestClose
+}) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
-  const [createConnectionLoading] = useToggle(false)
+  const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
+    false
+  )
 
-  const handleCreateConnection = useCallback((data: ConnectionFormData) => {
-    console.log(data)
-  }, [])
+  const handleCreateConnection = useCallback(
+    async (data: ConnectionFormData) => {
+      try {
+        formRef.current?.setErrors({})
+
+        const schema = Yup.object().shape({
+          name: Yup.string().required(),
+          host: Yup.string().required(),
+          port: Yup.number().required(),
+          password: Yup.string()
+        })
+
+        toggleCreateConnectionLoading()
+
+        await schema.validate(data, {
+          abortEarly: false
+        })
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
+
+          formRef.current?.setErrors(errors)
+        }
+      } finally {
+        toggleCreateConnectionLoading()
+      }
+    },
+    []
+  )
 
   const handleTestConnection = useCallback(async () => {
     if (!formRef.current) {
@@ -66,8 +98,14 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
     }
   }, [])
 
+  const handleCancel = useCallback(() => {
+    if (onRequestClose) {
+      onRequestClose()
+    }
+  }, [])
+
   return (
-    <Modal visible={visible} {...rest}>
+    <Modal visible={visible} onRequestClose={onRequestClose}>
       <h1>New connection</h1>
 
       <Form
@@ -78,7 +116,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
         ref={formRef}
         onSubmit={handleCreateConnection}
       >
-        <Input name="name" label="Name" />
+        <Input name="name" label="Connection name" />
 
         <InputGroup>
           <Input name="host" label="Host" />
@@ -89,22 +127,32 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
           type="password"
           name="password"
           label="Password"
-          placeholder="Leave empty for no password"
+          hint="Leave empty for no password"
         />
 
         <ActionsContainer>
           <Button
             loading={testConnectionLoading}
-            color="purple"
+            color="pink"
             onClick={handleTestConnection}
           >
             <FiActivity />
-            Testar conexão
+            Test connection
           </Button>
-          <Button loading={createConnectionLoading} type="submit" color="pink">
-            <FiPlus />
-            Salvar
-          </Button>
+
+          <ButtonGroup>
+            <Button onClick={handleCancel} type="button" color="opaque">
+              Cancel
+            </Button>
+            <Button
+              loading={createConnectionLoading}
+              type="submit"
+              color="purple"
+            >
+              <FiSave />
+              Save
+            </Button>
+          </ButtonGroup>
         </ActionsContainer>
       </Form>
     </Modal>

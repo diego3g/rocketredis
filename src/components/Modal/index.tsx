@@ -16,9 +16,7 @@ const Modal: React.FC<ModalProps> = ({
   const [isOpen, setIsOpen] = useState(visible)
 
   useEffect(() => {
-    if (visible) {
-      setIsOpen(visible)
-    }
+    setIsOpen(visible)
   }, [visible])
 
   const handleModalClose = useCallback(() => {

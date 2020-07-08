@@ -30,6 +30,7 @@
   "rules": {
     "prettier/prettier": "error",
     "react/prop-types": "off",
+    "no-unused-expressions": "off",
     "space-before-function-paren": "off",
     "import/extensions": [
       "error",
