@@ -4,8 +4,8 @@ import ReactModal from 'react-modal'
 import { Container } from './styles'
 
 export interface ModalProps {
-  visible?: boolean;
-  onRequestClose?: () => void;
+  visible?: boolean
+  onRequestClose?: () => void
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -30,7 +30,6 @@ const Modal: React.FC<ModalProps> = ({
   }, [])
 
   return (
-
     <ReactModal
       appElement={document.getElementById('modal') as HTMLElement}
       shouldCloseOnEsc={true}
@@ -39,9 +38,7 @@ const Modal: React.FC<ModalProps> = ({
       className="modal-content"
       isOpen={isOpen}
     >
-      <Container>
-        {children}
-      </Container>
+      <Container>{children}</Container>
     </ReactModal>
   )
 }

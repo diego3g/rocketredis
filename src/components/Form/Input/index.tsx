@@ -4,8 +4,8 @@ import { useField } from '@unform/core'
 import { Container } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
-  label?: string;
+  name: string
+  label?: string
 }
 
 const Input: React.FC<InputProps> = ({ label, name, ...rest }) => {
@@ -24,13 +24,9 @@ const Input: React.FC<InputProps> = ({ label, name, ...rest }) => {
 
   return (
     <Container>
-      { label && <label htmlFor={fieldName}>{label}</label> }
+      {label && <label htmlFor={fieldName}>{label}</label>}
 
-      <input
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      />
+      <input ref={inputRef} defaultValue={defaultValue} {...rest} />
     </Container>
   )
 }

@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components'
 import { defaultTheme } from '../../styles/theme'
 
 interface ContainerProps {
-  color: keyof typeof defaultTheme.colors;
+  color: keyof typeof defaultTheme.colors
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -11,7 +11,7 @@ export const Container = styled.button<ContainerProps>`
   background: ${props => props.theme.colors[props.color]};
   border: 0;
   border-radius: 4px;
-  color: #FFF;
+  color: #fff;
 
   display: flex;
   align-items: center;

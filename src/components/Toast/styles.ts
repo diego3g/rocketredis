@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components'
 import { animated } from 'react-spring'
 
 interface ContainerProps {
-  type: 'success' | 'error' | 'info';
-  hasDescription: boolean;
+  type: 'success' | 'error' | 'info'
+  hasDescription: boolean
 }
 
 const toastTypes = {

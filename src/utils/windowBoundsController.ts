@@ -2,12 +2,7 @@ import { config } from '../store/config'
 import { Rectangle } from 'electron'
 
 export const getWindowBounds = function (): Rectangle {
-  const {
-    width,
-    height,
-    x,
-    y
-  } = config.get('windowBounds') as Rectangle
+  const { width, height, x, y } = config.get('windowBounds') as Rectangle
 
   return {
     width: width || 1100,
@@ -17,16 +12,11 @@ export const getWindowBounds = function (): Rectangle {
   }
 }
 
-export const setWindowBounds = function (bounds: Rectangle | undefined): void{
+export const setWindowBounds = function (bounds: Rectangle | undefined): void {
   if (!bounds) {
     return
   }
-  const {
-    width,
-    height,
-    x,
-    y
-  } = bounds
+  const { width, height, x, y } = bounds
 
   config.set('windowBounds', {
     width: width || 1100,

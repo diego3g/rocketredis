@@ -11,7 +11,7 @@ const ConnectionDetails: React.FC = () => {
       width={(width - 300) / 2}
       height={Infinity}
       minConstraints={[340, Infinity]}
-      maxConstraints={[(width - 300 - 100), Infinity]}
+      maxConstraints={[width - 300 - 100, Infinity]}
     >
       asd
     </Container>

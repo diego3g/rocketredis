@@ -4,7 +4,7 @@ export const Container = styled.div`
   h1 {
     font-size: 18px;
     margin-bottom: 32px;
-  } 
+  }
 
   hr {
     margin: 16px 0;

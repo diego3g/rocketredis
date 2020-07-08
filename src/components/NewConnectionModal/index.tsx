@@ -13,9 +13,10 @@ import { testConnection } from '../../services/connection/TestConnectionService'
 import { useToast } from '../../context/toast'
 
 interface ConnectionFormData {
-  host: string;
-  port: string;
-  password: string;
+  name: string
+  host: string
+  port: string
+  password: string
 }
 
 const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
@@ -30,9 +31,15 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
   }, [])
 
   const handleTestConnection = useCallback(() => {
-    if (!formRef.current) { return }
+    if (!formRef.current) {
+      return
+    }
 
-    const { host, port, password } = formRef.current.getData() as ConnectionFormData
+    const {
+      host,
+      port,
+      password
+    } = formRef.current.getData() as ConnectionFormData
 
     toggleTestConnectionLoading()
 
@@ -40,21 +47,24 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
       host,
       port: Number(port),
       password
-    }).then(() => {
-      addToast({
-        type: 'success',
-        title: 'Connection successful',
-        description: 'Urrray... You can save your connection now!'
-      })
-    }).catch(() => {
-      addToast({
-        type: 'error',
-        title: 'Error on connection',
-        description: 'Error estabilishing connection with your Redis server'
-      })
-    }).finally(() => {
-      toggleTestConnectionLoading()
     })
+      .then(() => {
+        addToast({
+          type: 'success',
+          title: 'Connection successful',
+          description: 'Urrray... You can save your connection now!'
+        })
+      })
+      .catch(() => {
+        addToast({
+          type: 'error',
+          title: 'Error on connection',
+          description: 'Error estabilishing connection with your Redis server'
+        })
+      })
+      .finally(() => {
+        toggleTestConnectionLoading()
+      })
   }, [])
 
   return (
@@ -69,6 +79,8 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
         ref={formRef}
         onSubmit={handleCreateConnection}
       >
+        <Input name="name" label="Name" />
+
         <InputGroup>
           <Input name="host" label="Host" />
           <Input name="port" label="Port" />
@@ -82,13 +94,17 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
         />
 
         <ActionsContainer>
-          <Button loading={testConnectionLoading} color="purple" onClick={handleTestConnection}>
+          <Button
+            loading={testConnectionLoading}
+            color="purple"
+            onClick={handleTestConnection}
+          >
             <FiActivity />
             Testar conexão
           </Button>
           <Button loading={createConnectionLoading} type="submit" color="pink">
             <FiPlus />
-          Salvar
+            Salvar
           </Button>
         </ActionsContainer>
       </Form>

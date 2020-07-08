@@ -8,7 +8,7 @@ import { ToastMessage } from '../../context/toast'
 import { Container } from './styles'
 
 interface ToastContainerProps {
-  toasts: ToastMessage[];
+  toasts: ToastMessage[]
 }
 
 const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {

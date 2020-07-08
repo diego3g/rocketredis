@@ -23,8 +23,8 @@ export const Container = styled.header`
 `
 
 interface WindowActionsProps {
-  position: 'left' | 'right';
-  shouldShowIconsOnHover?: boolean;
+  position: 'left' | 'right'
+  shouldShowIconsOnHover?: boolean
 }
 
 export const WindowActions = styled.div<WindowActionsProps>`
@@ -34,15 +34,25 @@ export const WindowActions = styled.div<WindowActionsProps>`
   display: flex;
   align-items: center;
 
-  ${props => props.position === 'left' ? css`left: 16px;` : css`right: 16px;`};
-  ${props => props.shouldShowIconsOnHover && css`
-    &:hover svg {
-    display: block;
-  }`}
+  ${props =>
+    props.position === 'left'
+      ? css`
+          left: 16px;
+        `
+      : css`
+          right: 16px;
+        `};
+  ${props =>
+    props.shouldShowIconsOnHover &&
+    css`
+      &:hover svg {
+        display: block;
+      }
+    `}
 `
 
 interface MacActionButtonProps {
-  color: 'close' | 'minimize' | 'maximize';
+  color: 'close' | 'minimize' | 'maximize'
 }
 
 const colors = {

@@ -3,7 +3,12 @@ import { remote } from 'electron'
 import os from 'os'
 import { FiX, FiMinus, FiMaximize2, FiSquare } from 'react-icons/fi'
 
-import { Container, WindowActions, MacActionButton, DefaultActionButton } from './styles'
+import {
+  Container,
+  WindowActions,
+  MacActionButton,
+  DefaultActionButton
+} from './styles'
 import { useConfig } from '../../hooks/useConfig'
 
 const Header: React.FC = () => {
@@ -23,9 +28,12 @@ const Header: React.FC = () => {
 
     const { width: currentWidth, height: currentHeight } = window.getBounds()
 
-    const { width: maxWidth, height: maxHeight } = remote.screen.getPrimaryDisplay().workAreaSize
+    const {
+      width: maxWidth,
+      height: maxHeight
+    } = remote.screen.getPrimaryDisplay().workAreaSize
 
-    const isMaximized = (currentWidth === maxWidth && currentHeight === maxHeight)
+    const isMaximized = currentWidth === maxWidth && currentHeight === maxHeight
 
     if (!isMaximized) {
       window.maximize()
