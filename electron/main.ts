@@ -1,4 +1,5 @@
 import { app, BrowserWindow, nativeImage } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import * as path from 'path'
 import * as url from 'url'
 
@@ -31,7 +32,7 @@ function createWindow() {
   } else {
     mainWindow.loadURL(
       url.format({
-        pathname: path.join(__dirname, '../index.html'),
+        pathname: path.join(__dirname, 'renderer/index.html'),
         protocol: 'file:',
         slashes: true
       })
@@ -47,5 +48,8 @@ function createWindow() {
   })
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+  autoUpdater.checkForUpdatesAndNotify()
+})
 app.allowRendererProcessReuse = true
