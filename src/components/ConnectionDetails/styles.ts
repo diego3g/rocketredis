@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { ResizableBox } from 'react-resizable'
+import styled from 'styled-components'
 
 export const Container = styled(ResizableBox).attrs({
   resizeHandles: ['e'],

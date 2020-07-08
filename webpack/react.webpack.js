@@ -1,9 +1,13 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const rootPath = path.resolve(__dirname, '..')
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 module.exports = {
+  mode: isDevelopment ? 'development' : 'production',
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     mainFields: ['main', 'module', 'browser']
@@ -36,6 +40,9 @@ module.exports = {
     publicPath: './'
   },
   plugins: [
-    new HtmlWebpackPlugin()
-  ]
+    new HtmlWebpackPlugin({
+      template: path.resolve(rootPath, 'index.html')
+    }),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
 }

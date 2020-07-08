@@ -2,10 +2,10 @@ import React from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
-import { Container, Connections } from './styles'
 import NewConnectionModal from '../NewConnectionModal'
+import { Container, Connections } from './styles'
 
-const Sidebar: React.FC = () => {
+const ConnectionList: React.FC = () => {
   const [isCreateModalOpen, toggleCreateModalOpen] = useToggle(false)
 
   return (
@@ -27,9 +27,12 @@ const Sidebar: React.FC = () => {
         </Connections>
       </Container>
 
-      <NewConnectionModal visible={isCreateModalOpen} onRequestClose={toggleCreateModalOpen} />
+      <NewConnectionModal
+        visible={isCreateModalOpen}
+        onRequestClose={toggleCreateModalOpen}
+      />
     </>
   )
 }
 
-export default Sidebar
+export default ConnectionList

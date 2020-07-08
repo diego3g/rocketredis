@@ -1,17 +1,12 @@
-import React, { useEffect, useCallback } from 'react'
-import {
-  FiAlertCircle,
-  FiCheckCircle,
-  FiInfo,
-  FiXCircle
-} from 'react-icons/fi'
-import { useToast, ToastMessage } from '../../context/toast'
+import React, { useEffect, useCallback, CSSProperties } from 'react'
+import { FiAlertCircle, FiCheckCircle, FiInfo, FiXCircle } from 'react-icons/fi'
 
+import { useToast, ToastMessage } from '../../context/toast'
 import { Container } from './styles'
 
 interface ToastProps {
-  toast: ToastMessage;
-  style: any;
+  toast: ToastMessage
+  style: CSSProperties
 }
 
 const icons = {
@@ -39,16 +34,12 @@ const Toast: React.FC<ToastProps> = ({ toast, style }) => {
   }, [closeToast])
 
   return (
-    <Container
-      type={toast.type}
-      hasDescription={!!toast.description}
-      style={style}
-    >
+    <Container type={toast.type} style={style}>
       {icons[toast.type]}
 
       <div>
         <strong>{toast.title}</strong>
-        {toast.description && <p>{toast.description}</p>}
+        <p>{toast.description}</p>
       </div>
 
       <button type="button" onClick={closeToast}>

@@ -2,65 +2,39 @@
   "name": "rocketredis",
   "version": "1.0.0",
   "description": "A beautiful Redis GUI.",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
   "main": "./dist/main.js",
   "scripts": {
-    "dev": "npm-run-all -p dev:react electron:serve",
-    "dev:electron": "cross-env NODE_ENV=development webpack --config webpack/electron.webpack.js --mode development && electron .",
-    "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js --mode development",
-    "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
-    "lint": "eslint --ext .tsx,.ts,.js src/ electron/",
-    "test": "jest --passWithNoTests",
     "build": "npm-run-all -p build:*",
-    "build:electron": "cross-env NODE_ENV=production webpack --config webpack/electron.webpack.js --mode production",
-    "build:react": "cross-env NODE_ENV=production webpack --config webpack/react.webpack.js --mode production",
+    "build:electron": "cross-env NODE_ENV=production webpack --config webpack/electron.webpack.js",
+    "build:react": "cross-env NODE_ENV=production webpack --config webpack/react.webpack.js",
+    "dev": "npm-run-all -p dev:react electron:serve",
+    "dev:electron": "cross-env NODE_ENV=development webpack --config webpack/electron.webpack.js && electron .",
+    "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js",
+    "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
     "postinstall": "electron-builder install-app-deps",
-    "package": "yarn build && electron-builder build --publish never"
+    "lint": "eslint --ext .tsx,.ts,.js src/ electron/",
+    "package": "yarn build && electron-builder build --publish never",
+    "test": "jest --passWithNoTests",
+    "tsc": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "@babel/preset-react": "7.10.4",
-    "@babel/preset-typescript": "7.10.4",
-    "@testing-library/react": "10.4.4",
-    "@types/ioredis": "4.17.0",
-    "@types/jest": "26.0.4",
-    "@types/react": "16.9.41",
-    "@types/react-dom": "16.9.8",
-    "@types/react-modal": "3.10.6",
-    "@types/react-resizable": "1.7.2",
-    "@types/styled-components": "5.1.1",
-    "@typescript-eslint/eslint-plugin": "3.6.0",
-    "@typescript-eslint/parser": "3.6.0",
-    "babel-loader": "8.1.0",
-    "cross-env": "7.0.2",
-    "electron": "8.4.0",
-    "electron-builder": "22.7.0",
-    "eslint": "7.4.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-config-standard": "14.1.1",
-    "eslint-import-resolver-typescript": "2.0.0",
-    "eslint-plugin-import": "2.22.0",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-react": "7.20.3",
-    "eslint-plugin-standard": "4.0.1",
-    "html-webpack-plugin": "4.3.0",
-    "husky": "4.2.5",
-    "jest": "26.1.0",
-    "json-schema-typed": "7.0.3",
-    "lint-staged": "10.2.11",
-    "prettier": "2.0.5",
-    "ts-jest": "26.1.1",
-    "typescript": "3.9.6",
-    "webpack": "4.43.0",
-    "webpack-cli": "3.3.12",
-    "webpack-dev-server": "3.11.0"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
   },
   "dependencies": {
+    "@babel/runtime": "7.10.4",
     "@unform/core": "2.1.3",
     "@unform/web": "2.1.3",
     "electron-store": "5.2.0",
@@ -77,17 +51,56 @@
     "react-use": "15.3.2",
     "styled-components": "5.1.1",
     "uuidv4": "6.1.1",
-    "wait-on": "5.0.1"
+    "wait-on": "5.0.1",
+    "yup": "0.29.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ]
+  "devDependencies": {
+    "@babel/core": "7.10.4",
+    "@babel/plugin-transform-runtime": "7.10.4",
+    "@babel/preset-env": "7.10.4",
+    "@babel/preset-react": "7.10.4",
+    "@babel/preset-typescript": "7.10.4",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.3.3",
+    "@testing-library/react": "10.4.4",
+    "@types/ioredis": "4.17.0",
+    "@types/jest": "26.0.4",
+    "@types/node": "12.12.6",
+    "@types/react": "16.9.41",
+    "@types/react-dom": "16.9.8",
+    "@types/react-modal": "3.10.6",
+    "@types/react-resizable": "1.7.2",
+    "@types/styled-components": "5.1.1",
+    "@types/yup": "0.29.3",
+    "@typescript-eslint/eslint-plugin": "3.6.0",
+    "@typescript-eslint/parser": "3.6.0",
+    "babel-loader": "8.1.0",
+    "cross-env": "7.0.2",
+    "electron": "8.4.0",
+    "electron-builder": "22.7.0",
+    "eslint": "7.4.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-import-resolver-typescript": "2.0.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-import-helpers": "1.0.2",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.20.3",
+    "eslint-plugin-standard": "4.0.1",
+    "html-webpack-plugin": "4.3.0",
+    "husky": "4.2.5",
+    "jest": "26.1.0",
+    "json-schema-typed": "7.0.3",
+    "lint-staged": "10.2.11",
+    "prettier": "2.0.5",
+    "react-refresh": "0.8.3",
+    "sort-package-json": "1.44.0",
+    "ts-jest": "26.1.1",
+    "typescript": "3.9.6",
+    "webpack": "4.43.0",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
   },
   "build": {
     "appId": "com.diego3g.rocketredis",

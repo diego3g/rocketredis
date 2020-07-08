@@ -2,13 +2,12 @@ import React from 'react'
 import { createPortal } from 'react-dom'
 import { useTransition } from 'react-spring'
 
-import Toast from '../Toast'
 import { ToastMessage } from '../../context/toast'
-
+import Toast from '../Toast'
 import { Container } from './styles'
 
 interface ToastContainerProps {
-  toasts: ToastMessage[];
+  toasts: ToastMessage[]
 }
 
 const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {

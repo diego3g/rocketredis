@@ -1,12 +1,12 @@
 import Redis, { RedisOptions } from 'ioredis'
 
-export function testConnection (options: RedisOptions): Promise<void> {
+export function testConnection(options: RedisOptions): Promise<void> {
   return new Promise((resolve, reject) => {
     const connection = new Redis(options.port, options.host, {
       enableReadyCheck: true,
       connectTimeout: 3000,
       password: options.password,
-      retryStrategy () {
+      retryStrategy() {
         return null
       }
     })

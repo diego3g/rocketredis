@@ -1,9 +1,8 @@
-import styled, { css } from 'styled-components'
 import { animated } from 'react-spring'
+import styled, { css } from 'styled-components'
 
 interface ContainerProps {
-  type: 'success' | 'error' | 'info';
-  hasDescription: boolean;
+  type: 'success' | 'error' | 'info'
 }
 
 const toastTypes = {
@@ -74,14 +73,4 @@ export const Container = styled(animated.div)<ContainerProps>`
       opacity: 1;
     }
   }
-
-  ${props =>
-    !props.hasDescription &&
-    css`
-      align-items: flex-start;
-
-      svg {
-        margin-top: 4px !important;
-      }
-    `}
 `

@@ -1,10 +1,10 @@
-name: Test
+name: Type checking
 
 on: pull_request
 
 jobs:
   code:
-    name: Test code
+    name: Type checking code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,5 +18,5 @@ jobs:
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
         
-      - name: Run Jest
-        run: yarn test
+      - name: Run TypeScript
+        run: yarn tsc

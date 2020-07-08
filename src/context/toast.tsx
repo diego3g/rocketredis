@@ -1,25 +1,26 @@
 import React, { createContext, useState, useContext, useCallback } from 'react'
 import { uuid } from 'uuidv4'
+
 import ToastContainer from '../components/ToastContainer'
 
 export interface ToastMessage {
-  id: string;
-  type: 'success' | 'error' | 'info';
-  title: string;
-  description?: string;
+  id: string
+  type: 'success' | 'error' | 'info'
+  title: string
+  description: string
 }
 
 interface ToastShow {
-  (message: Omit<ToastMessage, 'id'>): string;
+  (message: Omit<ToastMessage, 'id'>): string
 }
 
 interface ToastHide {
-  (id: string): void;
+  (id: string): void
 }
 
 interface ToastContext {
-  addToast: ToastShow;
-  removeToast: ToastHide;
+  addToast: ToastShow
+  removeToast: ToastHide
 }
 
 const ToastContext = createContext<ToastContext | null>(null)
@@ -47,7 +48,7 @@ const ToastProvider: React.FC = ({ children }) => {
   )
 }
 
-function useToast (): ToastContext {
+function useToast(): ToastContext {
   const context = useContext(ToastContext)
 
   if (!context) {

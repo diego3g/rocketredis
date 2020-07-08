@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
-
   * {
     margin: 0;
     padding: 0;
@@ -63,7 +62,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .modal-content {
-    width: 360px;
+    width: 500px;
     background: ${props => props.theme.backgrounds.dark};
     border: 1px solid ${props => props.theme.backgrounds.lightest};
     padding: 16px;

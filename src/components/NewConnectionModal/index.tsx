@@ -1,64 +1,111 @@
-import React, { useRef, useCallback } from 'react'
-import Modal, { ModalProps } from '../Modal'
-import Button from '../Button'
-import { Form } from '@unform/web'
-import { useToggle } from 'react-use'
-
-import { ActionsContainer } from './styles'
-import { FiActivity, FiPlus } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
-import Input from '../Form/Input'
-import InputGroup from '../Form/InputGroup'
-import { testConnection } from '../../services/connection/TestConnectionService'
+import { Form } from '@unform/web'
+import React, { useRef, useCallback } from 'react'
+import { FiActivity, FiSave } from 'react-icons/fi'
+import { useToggle } from 'react-use'
+import * as Yup from 'yup'
+
 import { useToast } from '../../context/toast'
+import { testConnection } from '../../services/connection/TestConnectionService'
+import getValidationErrors from '../../utils/getValidationErrors'
+import Button from '../Button'
+import Input from '../Form/Input'
+import Modal, { ModalProps } from '../Modal'
+import { ActionsContainer, ButtonGroup, InputGroup } from './styles'
 
 interface ConnectionFormData {
-  host: string;
-  port: string;
-  password: string;
+  name: string
+  host: string
+  port: string
+  password: string
 }
 
-const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
+const NewConnectionModal: React.FC<ModalProps> = ({
+  visible,
+  onRequestClose
+}) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
-  const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(false)
+  const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
+    false
+  )
 
-  const handleCreateConnection = useCallback((data: ConnectionFormData) => {
-    console.log(data)
-  }, [])
+  const handleCreateConnection = useCallback(
+    async (data: ConnectionFormData) => {
+      try {
+        formRef.current?.setErrors({})
 
-  const handleTestConnection = useCallback(() => {
-    if (!formRef.current) { return }
+        const schema = Yup.object().shape({
+          name: Yup.string().required(),
+          host: Yup.string().required(),
+          port: Yup.number().required(),
+          password: Yup.string()
+        })
 
-    const { host, port, password } = formRef.current.getData() as ConnectionFormData
+        toggleCreateConnectionLoading()
 
-    toggleTestConnectionLoading()
+        await schema.validate(data, {
+          abortEarly: false
+        })
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
 
-    testConnection({
+          formRef.current?.setErrors(errors)
+        }
+      } finally {
+        toggleCreateConnectionLoading()
+      }
+    },
+    []
+  )
+
+  const handleTestConnection = useCallback(async () => {
+    if (!formRef.current) {
+      return
+    }
+
+    const {
       host,
-      port: Number(port),
+      port,
       password
-    }).then(() => {
+    } = formRef.current.getData() as ConnectionFormData
+
+    try {
+      toggleTestConnectionLoading()
+
+      await testConnection({
+        host,
+        port: Number(port),
+        password
+      })
+
       addToast({
         type: 'success',
         title: 'Connection successful',
         description: 'Urrray... You can save your connection now!'
       })
-    }).catch(() => {
+    } catch (err) {
       addToast({
         type: 'error',
         title: 'Error on connection',
         description: 'Error estabilishing connection with your Redis server'
       })
-    }).finally(() => {
+    } finally {
       toggleTestConnectionLoading()
-    })
+    }
+  }, [])
+
+  const handleCancel = useCallback(() => {
+    if (onRequestClose) {
+      onRequestClose()
+    }
   }, [])
 
   return (
-    <Modal visible={visible} {...rest}>
+    <Modal visible={visible} onRequestClose={onRequestClose}>
       <h1>New connection</h1>
 
       <Form
@@ -69,6 +116,8 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
         ref={formRef}
         onSubmit={handleCreateConnection}
       >
+        <Input name="name" label="Connection name" />
+
         <InputGroup>
           <Input name="host" label="Host" />
           <Input name="port" label="Port" />
@@ -78,18 +127,32 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
           type="password"
           name="password"
           label="Password"
-          placeholder="Leave empty for no password"
+          hint="Leave empty for no password"
         />
 
         <ActionsContainer>
-          <Button loading={testConnectionLoading} color="purple" onClick={handleTestConnection}>
+          <Button
+            loading={testConnectionLoading}
+            color="pink"
+            onClick={handleTestConnection}
+          >
             <FiActivity />
-            Testar conexão
+            Test connection
           </Button>
-          <Button loading={createConnectionLoading} type="submit" color="pink">
-            <FiPlus />
-          Salvar
-          </Button>
+
+          <ButtonGroup>
+            <Button onClick={handleCancel} type="button" color="opaque">
+              Cancel
+            </Button>
+            <Button
+              loading={createConnectionLoading}
+              type="submit"
+              color="purple"
+            >
+              <FiSave />
+              Save
+            </Button>
+          </ButtonGroup>
         </ActionsContainer>
       </Form>
     </Modal>
