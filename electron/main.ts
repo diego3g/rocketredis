@@ -15,6 +15,10 @@ function createWindow() {
     `${app.getAppPath()}/assets/icon/128x128.png`
   )
 
+  if (app.dock) {
+    app.dock.setIcon(icon)
+  }
+
   mainWindow = new BrowserWindow({
     ...getWindowBounds(),
     icon,
