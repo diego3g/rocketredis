@@ -30,7 +30,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
     console.log(data)
   }, [])
 
-  const handleTestConnection = useCallback(() => {
+  const handleTestConnection = useCallback(async () => {
     if (!formRef.current) {
       return
     }
@@ -41,30 +41,29 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
       password
     } = formRef.current.getData() as ConnectionFormData
 
-    toggleTestConnectionLoading()
+    try {
+      toggleTestConnectionLoading()
 
-    testConnection({
-      host,
-      port: Number(port),
-      password
-    })
-      .then(() => {
-        addToast({
-          type: 'success',
-          title: 'Connection successful',
-          description: 'Urrray... You can save your connection now!'
-        })
+      await testConnection({
+        host,
+        port: Number(port),
+        password
       })
-      .catch(() => {
-        addToast({
-          type: 'error',
-          title: 'Error on connection',
-          description: 'Error estabilishing connection with your Redis server'
-        })
+
+      addToast({
+        type: 'success',
+        title: 'Connection successful',
+        description: 'Urrray... You can save your connection now!'
       })
-      .finally(() => {
-        toggleTestConnectionLoading()
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Error on connection',
+        description: 'Error estabilishing connection with your Redis server'
       })
+    } finally {
+      toggleTestConnectionLoading()
+    }
   }, [])
 
   return (
