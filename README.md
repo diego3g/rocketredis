@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://storage.googleapis.com/golden-wind/rocketredis/rocketredis.png" width="200" />
+  <img src="https://storage.googleapis.com/golden-wind/rocketredis/logo.png" width="200" />
 </p>
 
 <h1 align="center">

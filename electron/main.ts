@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, nativeImage } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 import { getWindowBounds, setWindowBounds } from '../src/utils/windowBoundsController'
@@ -6,8 +6,13 @@ import { getWindowBounds, setWindowBounds } from '../src/utils/windowBoundsContr
 let mainWindow: Electron.BrowserWindow | null
 
 function createWindow () {
+  const icon = nativeImage.createFromPath(
+    `${app.getAppPath()}/assets/icon/128x128.png`
+  )
+
   mainWindow = new BrowserWindow({
     ...getWindowBounds(),
+    icon,
     minWidth: 1000,
     minHeight: 600,
     frame: false,
