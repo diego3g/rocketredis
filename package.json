@@ -12,7 +12,8 @@
     "dev:react": "cross-env NODE_ENV=development webpack-dev-server --config webpack/react.webpack.js --mode development",
     "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
     "lint": "eslint --ext .tsx,.ts,.js src/ electron/",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "tsc": "tsc --noEmit"
   },
   "husky": {
     "hooks": {
@@ -53,6 +54,7 @@
     "@testing-library/react": "10.4.4",
     "@types/ioredis": "4.17.0",
     "@types/jest": "26.0.4",
+    "@types/node": "12.12.6",
     "@types/react": "16.9.41",
     "@types/react-dom": "16.9.8",
     "@types/react-modal": "3.10.6",
