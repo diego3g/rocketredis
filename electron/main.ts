@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeImage } from 'electron'
+import { app, BrowserWindow, nativeImage, TouchBar } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import * as path from 'path'
 import * as url from 'url'
@@ -9,6 +9,19 @@ import {
 } from '../src/utils/windowBoundsController'
 
 let mainWindow: Electron.BrowserWindow | null
+
+const tbModalButton = new TouchBar.TouchBarButton({
+  label: 'New Connection',
+  icon: nativeImage.createFromPath(`${app.getAppPath()}/build/icon.png`),
+  iconPosition: 'left',
+  click: () => {
+    mainWindow?.webContents.send('set-modal')
+  }
+})
+
+const touchBar = new TouchBar({
+  items: [tbModalButton]
+})
 
 function createWindow() {
   const icon = nativeImage.createFromPath(`${app.getAppPath()}/build/icon.png`)
@@ -40,6 +53,8 @@ function createWindow() {
       })
     )
   }
+
+  if (process.platform === 'darwin') mainWindow.setTouchBar(touchBar)
 
   mainWindow.on('close', () => {
     setWindowBounds(mainWindow?.getBounds())
