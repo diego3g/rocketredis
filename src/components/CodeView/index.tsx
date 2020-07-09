@@ -1,14 +1,14 @@
 import React from 'react'
-import { Book } from 'react-feather'
+import { FiBook } from 'react-icons/fi'
 
 import { Container, BookIconContainer } from './styles'
 
 const CodeView: React.FC = () => {
   return (
     <Container>
-      asd
       <BookIconContainer>
-        <Book></Book>
+        <FiBook></FiBook>
+        <p>No key Selected</p>
       </BookIconContainer>
     </Container>
   )
