@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Modal from 'react-modal'
+import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
 
 import CodeView from './components/CodeView'
@@ -17,21 +18,23 @@ Modal.setAppElement('#root')
 
 const App = () => {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <AppProvider>
-        <Container>
-          <Header />
-          <Content>
-            <ConnectionList />
-            <Connection>
-              <ConnectionDetails />
-              <CodeView />
-            </Connection>
-          </Content>
-        </Container>
-      </AppProvider>
-      <GlobalStyle />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={defaultTheme}>
+        <AppProvider>
+          <Container>
+            <Header />
+            <Content>
+              <ConnectionList />
+              <Connection>
+                <ConnectionDetails />
+                <CodeView />
+              </Connection>
+            </Content>
+          </Container>
+        </AppProvider>
+        <GlobalStyle />
+      </ThemeProvider>
+    </RecoilRoot>
   )
 }
 
