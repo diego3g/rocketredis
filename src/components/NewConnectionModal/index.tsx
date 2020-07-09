@@ -11,7 +11,12 @@ import getValidationErrors from '../../utils/getValidationErrors'
 import Button from '../Button'
 import Input from '../Form/Input'
 import Modal, { ModalProps } from '../Modal'
-import { ActionsContainer, ButtonGroup, InputGroup } from './styles'
+import {
+  ActionsContainer,
+  ButtonGroup,
+  InputGroup,
+  TestConnectionButton
+} from './styles'
 
 interface ConnectionFormData {
   name: string
@@ -131,14 +136,14 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         />
 
         <ActionsContainer>
-          <Button
+          <TestConnectionButton
             loading={testConnectionLoading}
             color="pink"
             onClick={handleTestConnection}
           >
             <FiActivity />
             Test connection
-          </Button>
+          </TestConnectionButton>
 
           <ButtonGroup>
             <Button onClick={handleCancel} type="button" color="opaque">

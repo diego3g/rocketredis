@@ -25,7 +25,7 @@ export const Connections = styled.div`
     button {
       background: transparent;
       border: 0;
-      color: ${props => props.theme.colors.green};
+      color: ${props => props.theme.colors.grey};
       padding: 4px;
 
       display: flex;
@@ -33,7 +33,7 @@ export const Connections = styled.div`
       justify-content: center;
 
       cursor: pointer;
-      transition: opacity 0.2s;
+      transition: color 0.2s;
 
       svg {
         width: 14px;
@@ -41,7 +41,7 @@ export const Connections = styled.div`
       }
 
       &:hover {
-        opacity: 0.8;
+        color: ${props => props.theme.colors.green};
       }
     }
   }
