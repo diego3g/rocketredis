@@ -41,7 +41,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .react-resizable-handle-e { 
+  .react-resizable-handle-e {
     right: 0;
     padding-right: 6px;
     top: 50%;

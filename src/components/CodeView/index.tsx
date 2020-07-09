@@ -1,15 +1,13 @@
 import React from 'react'
 import { FiBook } from 'react-icons/fi'
 
-import { Container, BookIconContainer } from './styles'
+import { Container } from './styles'
 
 const CodeView: React.FC = () => {
   return (
     <Container>
-      <BookIconContainer>
-        <FiBook></FiBook>
-        <p>No key Selected</p>
-      </BookIconContainer>
+      <FiBook />
+      <p>No Key Selected</p>
     </Container>
   )
 }

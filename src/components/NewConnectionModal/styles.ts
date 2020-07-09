@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import Button from '../Button'
+
 export const ActionsContainer = styled.div`
   display: flex;
   flex: 1;
@@ -40,4 +42,8 @@ export const ButtonGroup = styled.div`
       margin-right: 8px;
     }
   }
+`
+
+export const TestConnectionButton = styled(Button)`
+  width: 155px;
 `

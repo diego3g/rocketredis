@@ -1,32 +1,28 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  flex: 1;
   display: flex;
-  position: relative;
-  height: 100%;
-  padding: 16px;
+  flex: 1;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${props => props.theme.backgrounds.darker};
-`
 
-export const BookIconContainer = styled.div`
-  positon: absolute;
-  text-align: center;
+  padding: 16px;
+  background: ${props => props.theme.backgrounds.darker};
+
   svg {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 120px;
     stroke: #322d41;
-    stroke-width: 1px;
+    stroke-width: 0.8px;
   }
 
   p {
-    padding-top: 5px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
+    margin-top: 14px;
     font-size: 20px;
+    font-weight: bold;
     color: #322d41;
+
+    text-align: center;
   }
 `
