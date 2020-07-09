@@ -3,9 +3,12 @@ import { Form } from '@unform/web'
 import React, { useRef, useCallback } from 'react'
 import { FiActivity, FiSave } from 'react-icons/fi'
 import { useToggle } from 'react-use'
+import { useSetRecoilState } from 'recoil'
 import * as Yup from 'yup'
 
+import { connectionsState } from '../../atoms/connections'
 import { useToast } from '../../context/toast'
+import { saveAndGetConnections } from '../../services/connection/SaveConnectionService'
 import { testConnection } from '../../services/connection/TestConnectionService'
 import getValidationErrors from '../../utils/getValidationErrors'
 import Button from '../Button'
@@ -31,6 +34,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
 }) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
+  const setConnections = useSetRecoilState(connectionsState)
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
   const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
@@ -54,6 +58,33 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         await schema.validate(data, {
           abortEarly: false
         })
+
+        const { name, host, port, password } = data
+
+        try {
+          const connections = saveAndGetConnections({
+            name,
+            host,
+            port: Number(port),
+            password
+          })
+
+          setConnections(connections)
+
+          addToast({
+            type: 'success',
+            title: 'Connection saved',
+            description: 'You can now connect to your database!'
+          })
+
+          handleCloseModal()
+        } catch (err) {
+          addToast({
+            type: 'error',
+            title: 'Error saving connection',
+            description: err.message || 'Unexpected error ocurred, try again.'
+          })
+        }
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -122,7 +153,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
     }
   }, [])
 
-  const handleCancel = useCallback(() => {
+  const handleCloseModal = useCallback(() => {
     if (onRequestClose) {
       onRequestClose()
     }
@@ -165,7 +196,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
           </TestConnectionButton>
 
           <ButtonGroup>
-            <Button onClick={handleCancel} type="button" color="opaque">
+            <Button onClick={handleCloseModal} type="button" color="opaque">
               Cancel
             </Button>
             <Button
