@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, CSSProperties, memo } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiInfo, FiXCircle } from 'react-icons/fi'
 
-import { useToast, ToastMessage } from '../../context/toast'
+import { useToast, ToastMessage } from '../../../context/toast'
 import { Container } from './styles'
 
 interface ToastProps {

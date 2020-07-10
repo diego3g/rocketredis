@@ -3,7 +3,7 @@ import { FiBook } from 'react-icons/fi'
 
 import { Container } from './styles'
 
-const CodeView: React.FC = () => {
+const KeyContent: React.FC = () => {
   return (
     <Container>
       <FiBook />
@@ -12,4 +12,4 @@ const CodeView: React.FC = () => {
   )
 }
 
-export default memo(CodeView)
+export default memo(KeyContent)

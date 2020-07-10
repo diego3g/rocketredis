@@ -6,14 +6,14 @@ import { useToggle } from 'react-use'
 import { useSetRecoilState } from 'recoil'
 import * as Yup from 'yup'
 
-import { connectionsState } from '../../atoms/connections'
-import { useToast } from '../../context/toast'
-import { saveAndGetConnections } from '../../services/connection/SaveConnectionService'
-import { testConnection } from '../../services/connection/TestConnectionService'
-import getValidationErrors from '../../utils/getValidationErrors'
-import Button from '../Button'
-import Input from '../Form/Input'
-import Modal, { ModalProps } from '../Modal'
+import { connectionsState } from '../../../atoms/connections'
+import Button from '../../../components/Button'
+import Input from '../../../components/Form/Input'
+import Modal, { ModalProps } from '../../../components/Modal'
+import { useToast } from '../../../context/toast'
+import { saveAndGetConnections } from '../../../services/connection/SaveConnectionService'
+import { testConnection } from '../../../services/connection/TestConnectionService'
+import getValidationErrors from '../../../utils/getValidationErrors'
 import {
   ActionsContainer,
   ButtonGroup,

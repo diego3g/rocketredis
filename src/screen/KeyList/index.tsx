@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { Container } from './styles'
 
-const ConnectionDetails: React.FC = () => {
+const KeyList: React.FC = () => {
   const { width } = useWindowSize({ watch: false })
 
   return (
@@ -18,4 +18,4 @@ const ConnectionDetails: React.FC = () => {
   )
 }
 
-export default memo(ConnectionDetails)
+export default memo(KeyList)
