@@ -4,14 +4,9 @@ import Modal from 'react-modal'
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
 
-import CodeView from './components/CodeView'
-import Connection from './components/Connection'
-import ConnectionDetails from './components/ConnectionDetails'
-import ConnectionList from './components/ConnectionList'
-import Header from './components/Header'
 import AppProvider from './context'
+import Screen from './screen'
 import { GlobalStyle } from './styles/GlobalStyle'
-import { Container, Content } from './styles/Main'
 import { defaultTheme } from './styles/theme'
 
 Modal.setAppElement('#root')
@@ -21,16 +16,7 @@ const App = () => {
     <RecoilRoot>
       <ThemeProvider theme={defaultTheme}>
         <AppProvider>
-          <Container>
-            <Header />
-            <Content>
-              <ConnectionList />
-              <Connection>
-                <ConnectionDetails />
-                <CodeView />
-              </Connection>
-            </Content>
-          </Container>
+          <Screen />
         </AppProvider>
         <GlobalStyle />
       </ThemeProvider>

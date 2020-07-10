@@ -4,7 +4,7 @@ import { useToggle } from 'react-use'
 import { useRecoilState } from 'recoil'
 
 import { connectionsState } from '../../atoms/connections'
-import NewConnectionModal from '../NewConnectionModal'
+import NewConnectionModal from './NewConnectionModal'
 import {
   Container,
   Connections,
@@ -13,7 +13,7 @@ import {
   ConnectionError
 } from './styles'
 
-const ConnectionList: React.FC = () => {
+const ConnectionsList: React.FC = () => {
   const [connections] = useRecoilState(connectionsState)
   const [isCreateModalOpen, toggleCreateModalOpen] = useToggle(false)
 
@@ -87,4 +87,4 @@ const ConnectionList: React.FC = () => {
   )
 }
 
-export default memo(ConnectionList)
+export default memo(ConnectionsList)
