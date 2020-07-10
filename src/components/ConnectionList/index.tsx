@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { FiPlusCircle, FiDatabase, FiChevronRight } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 import { useRecoilState } from 'recoil'
@@ -87,4 +87,4 @@ const ConnectionList: React.FC = () => {
   )
 }
 
-export default ConnectionList
+export default memo(ConnectionList)

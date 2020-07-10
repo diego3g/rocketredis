@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, CSSProperties } from 'react'
+import React, { useEffect, useCallback, CSSProperties, memo } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiInfo, FiXCircle } from 'react-icons/fi'
 
 import { useToast, ToastMessage } from '../../context/toast'
@@ -49,4 +49,4 @@ const Toast: React.FC<ToastProps> = ({ toast, style }) => {
   )
 }
 
-export default Toast
+export default memo(Toast)

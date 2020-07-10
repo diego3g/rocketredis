@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTransition } from 'react-spring'
 
@@ -30,4 +30,4 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {
   )
 }
 
-export default ToastContainer
+export default memo(ToastContainer)

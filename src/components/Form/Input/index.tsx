@@ -4,7 +4,8 @@ import React, {
   useCallback,
   InputHTMLAttributes,
   useRef,
-  useEffect
+  useEffect,
+  memo
 } from 'react'
 import { FiAlertCircle } from 'react-icons/fi'
 
@@ -73,4 +74,4 @@ const Input: React.FC<InputProps> = ({ label, name, hint, ...rest }) => {
   )
 }
 
-export default Input
+export default memo(Input)

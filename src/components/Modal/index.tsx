@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, memo } from 'react'
 import ReactModal from 'react-modal'
 
 import { Container } from './styles'
@@ -41,4 +41,4 @@ const Modal: React.FC<ModalProps> = ({
   )
 }
 
-export default Modal
+export default memo(Modal)
