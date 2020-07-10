@@ -79,7 +79,21 @@ const NewConnectionModal: React.FC<ModalProps> = ({
     } = formRef.current.getData() as ConnectionFormData
 
     try {
+      formRef.current?.setErrors({})
       toggleTestConnectionLoading()
+      const schema = Yup.object().shape({
+        host: Yup.string().required(),
+        port: Yup.number().required(),
+        password: Yup.string()
+      })
+      const data = {
+        host,
+        port
+      }
+
+      await schema.validate(data, {
+        abortEarly: false
+      })
 
       await testConnection({
         host,
@@ -93,11 +107,16 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         description: 'Urrray... You can save your connection now!'
       })
     } catch (err) {
-      addToast({
-        type: 'error',
-        title: 'Error on connection',
-        description: 'Error estabilishing connection with your Redis server'
-      })
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
+        formRef.current?.setErrors(errors)
+      } else {
+        addToast({
+          type: 'error',
+          title: 'Error on connection',
+          description: 'Error estabilishing connection with your Redis server'
+        })
+      }
     } finally {
       toggleTestConnectionLoading()
     }
