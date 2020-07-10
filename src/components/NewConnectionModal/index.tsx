@@ -1,6 +1,6 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, memo } from 'react'
 import { FiActivity, FiSave } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 import { useSetRecoilState } from 'recoil'
@@ -214,4 +214,4 @@ const NewConnectionModal: React.FC<ModalProps> = ({
   )
 }
 
-export default NewConnectionModal
+export default memo(NewConnectionModal)

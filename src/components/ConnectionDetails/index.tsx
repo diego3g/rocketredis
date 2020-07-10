@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { Container } from './styles'
@@ -18,4 +18,4 @@ const ConnectionDetails: React.FC = () => {
   )
 }
 
-export default ConnectionDetails
+export default memo(ConnectionDetails)
