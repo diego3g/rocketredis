@@ -17,9 +17,9 @@ export const Container = styled.header`
   border-bottom: 1px solid ${props => props.theme.backgrounds.lightest};
 
   strong {
-    font-size: 14px;
-    font-weight: 300;
-    color: ${props => props.theme.colors.white};
+    font-size: 13px;
+    font-weight: 400;
+    color: ${props => props.theme.colors.grey};
   }
 `
 

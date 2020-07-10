@@ -48,6 +48,7 @@ export const Container = styled(animated.div)<ContainerProps>`
 
     strong {
       font-size: 14px;
+      font-weight: 500;
     }
 
     p {
