@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Container } from './styles'
+import { Container, TitleHeader, ContentContainer } from './styles'
 import { useWindowSize } from '../../hooks/useWindowSize'
 
 const ConnectionDetails: React.FC = () => {
@@ -13,7 +13,14 @@ const ConnectionDetails: React.FC = () => {
       minConstraints={[340, Infinity]}
       maxConstraints={[(width - 300 - 100), Infinity]}
     >
-      asd
+      <TitleHeader>
+        Connection Details
+      </TitleHeader>
+
+      <ContentContainer>
+        Connection Details Info
+      </ContentContainer>
+
     </Container>
   )
 }

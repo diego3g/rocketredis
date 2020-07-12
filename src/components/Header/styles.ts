@@ -3,7 +3,7 @@ import { defaultTheme } from '../../styles/theme'
 
 export const Container = styled.header`
   width: 100%;
-  height: 40px;
+  height: 30px;
   position: relative;
 
   -webkit-user-select: none;
@@ -16,8 +16,8 @@ export const Container = styled.header`
   border-bottom: 1px solid ${props => props.theme.colors.background.lightest};
 
   strong {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 12px;
+    font-weight: 400;
     color: ${props => props.theme.colors.white};
   }
 `

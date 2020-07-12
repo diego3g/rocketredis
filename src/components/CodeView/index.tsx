@@ -1,9 +1,18 @@
 import React from 'react'
 
-import { Container } from './styles'
+import { Container, TitleHeader, ContentContainer } from './styles'
 
 const CodeView: React.FC = () => {
-  return <Container>asd</Container>
+  return (
+    <>
+      <Container>
+        <TitleHeader>Code View</TitleHeader>
+        <ContentContainer>
+          Code Content View
+        </ContentContainer>
+      </Container>
+    </>
+  )
 }
 
 export default CodeView

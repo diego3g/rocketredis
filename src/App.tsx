@@ -31,7 +31,6 @@ const Container = styled.div`
 const Content = styled.div`
   width: 100%;
   flex: 1;
-
   display: flex;
 `
 

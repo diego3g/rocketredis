@@ -88,7 +88,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({ visible, ...rest }) => {
           </Button>
           <Button loading={createConnectionLoading} type="submit" color="pink">
             <FiPlus />
-          Salvar
+            Salvar
           </Button>
         </ActionsContainer>
       </Form>
