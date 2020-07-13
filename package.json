@@ -58,7 +58,7 @@
     "react-use": "15.3.2",
     "styled-components": "5.1.1",
     "uuidv4": "6.1.1",
-    "wait-on": "5.0.1",
+    "wait-on": "5.1.0",
     "yup": "0.29.1"
   },
   "devDependencies": {
