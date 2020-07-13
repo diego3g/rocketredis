@@ -1,6 +1,7 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import React, { useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiActivity, FiSave } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 import * as Yup from 'yup'
@@ -31,6 +32,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
 }) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
+  const { t } = useTranslation()
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
   const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
@@ -111,11 +113,20 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         const errors = getValidationErrors(err)
         formRef.current?.setErrors(errors)
       } else {
-        addToast({
-          type: 'error',
-          title: 'Error on connection',
-          description: 'Error estabilishing connection with your Redis server'
-        })
+        const message = err.message
+        if (message.search('WRONGPASS')) {
+          addToast({
+            type: 'error',
+            title: 'Error on connection',
+            description: 'Damn it, wrong password maybe 1234?'
+          })
+        } else {
+          addToast({
+            type: 'error',
+            title: 'Error on connection',
+            description: 'Error estabilishing connection with your Redis server'
+          })
+        }
       }
     } finally {
       toggleTestConnectionLoading()
@@ -130,7 +141,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
 
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
-      <h1>New connection</h1>
+      <h1>{t('newConnection.title')}</h1>
 
       <Form
         initialData={{
@@ -140,18 +151,18 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         ref={formRef}
         onSubmit={handleCreateConnection}
       >
-        <Input name="name" label="Connection name" />
+        <Input name="name" label={t('newConnection.connectionName')} />
 
         <InputGroup>
-          <Input name="host" label="Host" />
-          <Input name="port" label="Port" />
+          <Input name="host" label={t('newConnection.host')} />
+          <Input name="port" label={t('newConnection.port')} />
         </InputGroup>
 
         <Input
           type="password"
           name="password"
-          label="Password"
-          hint="Leave empty for no password"
+          label={t('newConnection.password')}
+          hint={t('newConnection.passwordHint')}
         />
 
         <ActionsContainer>
@@ -161,12 +172,12 @@ const NewConnectionModal: React.FC<ModalProps> = ({
             onClick={handleTestConnection}
           >
             <FiActivity />
-            Test connection
+            {t('newConnection.testConnectionButtonLabel')}
           </TestConnectionButton>
 
           <ButtonGroup>
             <Button onClick={handleCancel} type="button" color="opaque">
-              Cancel
+              {t('newConnection.cancelButtonLabel')}
             </Button>
             <Button
               loading={createConnectionLoading}
@@ -174,7 +185,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
               color="purple"
             >
               <FiSave />
-              Save
+              {t('newConnection.saveButtonLabel')}
             </Button>
           </ButtonGroup>
         </ActionsContainer>

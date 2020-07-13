@@ -13,6 +13,8 @@ import { GlobalStyle } from './styles/GlobalStyle'
 import { Container, Content } from './styles/Main'
 import { defaultTheme } from './styles/theme'
 
+import '../i18n.js'
+
 Modal.setAppElement('#root')
 
 const App = () => {
