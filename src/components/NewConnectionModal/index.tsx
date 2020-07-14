@@ -118,7 +118,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
           addToast({
             type: 'error',
             title: 'Error on connection',
-            description: 'Damn it, wrong password maybe 1234?'
+            description: 'The password you entered is incorrect'
           })
         } else {
           addToast({

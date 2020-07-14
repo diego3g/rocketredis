@@ -13,7 +13,7 @@ import { GlobalStyle } from './styles/GlobalStyle'
 import { Container, Content } from './styles/Main'
 import { defaultTheme } from './styles/theme'
 
-import '../i18n.js'
+import '../i18n'
 
 Modal.setAppElement('#root')
 
