@@ -12,7 +12,7 @@
     "jsx": "react",
     "sourceMap": true,
     "outDir": "./dist",
-    "strict": true ,
+    "strict": true,
     "esModuleInterop": true,
     "types": ["node"]
   },
