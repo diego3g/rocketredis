@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     color: #E1E1E6;
     background: transparent;
+    -webkit-font-smoothing: antialiased;
   }
 
   body, input, button {
@@ -36,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     &::before {
       width: 1px;
       height: 24px;
-      background: ${props => props.theme.backgrounds.lightest};
+      background: rgba(255, 255, 255, 0.1);
       content: '';
     }
   }

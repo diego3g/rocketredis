@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { ButtonHTMLAttributes, memo } from 'react'
 import { FiLoader } from 'react-icons/fi'
 
 import { defaultTheme } from '../../styles/theme'
@@ -29,4 +29,4 @@ const Button: React.FC<ButtonProps> = ({
   )
 }
 
-export default Button
+export default memo(Button)

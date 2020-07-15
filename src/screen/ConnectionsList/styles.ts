@@ -10,15 +10,15 @@ export const Container = styled(ResizableBox).attrs({
 `
 
 export const Connections = styled.div`
-  padding: 16px;
-
   header {
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     strong {
       font-size: 12px;
+      font-weight: 500;
       color: ${props => props.theme.colors.grey};
     }
 
@@ -44,5 +44,9 @@ export const Connections = styled.div`
         color: ${props => props.theme.colors.green};
       }
     }
+  }
+
+  ul {
+    list-style: none;
   }
 `

@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
+import { useRecoilState } from 'recoil'
 
-import NewConnectionModal from '../NewConnectionModal'
+import { connectionsState } from '../../atoms/connections'
+import Connection from './Connection'
+import NewConnectionModal from './NewConnectionModal'
 import { Container, Connections } from './styles'
 
-const ConnectionList: React.FC = () => {
+const ConnectionsList: React.FC = () => {
+  const [connections] = useRecoilState(connectionsState)
   const [isCreateModalOpen, toggleCreateModalOpen] = useToggle(false)
 
   return (
@@ -24,6 +28,12 @@ const ConnectionList: React.FC = () => {
               <FiPlusCircle />
             </button>
           </header>
+
+          <ul>
+            {connections.map(connection => (
+              <Connection key={connection.name} connection={connection} />
+            ))}
+          </ul>
         </Connections>
       </Container>
 
@@ -35,4 +45,4 @@ const ConnectionList: React.FC = () => {
   )
 }
 
-export default ConnectionList
+export default memo(ConnectionsList)

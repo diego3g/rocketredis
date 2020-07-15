@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { memo, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTransition } from 'react-spring'
 
 import { ToastMessage } from '../../context/toast'
-import Toast from '../Toast'
 import { Container } from './styles'
+import Toast from './Toast'
 
 interface ToastContainerProps {
   toasts: ToastMessage[]
 }
 
 const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {
-  const transitions = useTransition(toasts, toast => toast.id, {
+  const visibleToasts = useMemo(() => {
+    if (toasts.length > 5) {
+      return toasts.slice(toasts.length - 5, toasts.length)
+    }
+
+    return toasts
+  }, [toasts])
+
+  const transitions = useTransition(visibleToasts, toast => toast.id, {
     from: { right: '-120%' },
     enter: { right: '0%' },
     leave: { right: '-120%' },
@@ -30,4 +38,4 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {
   )
 }
 
-export default ToastContainer
+export default memo(ToastContainer)

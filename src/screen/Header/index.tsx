@@ -1,6 +1,6 @@
 import { remote } from 'electron'
 import os from 'os'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, memo } from 'react'
 import { FiX, FiMinus, FiMaximize2, FiSquare } from 'react-icons/fi'
 
 import { useConfig } from '../../hooks/useConfig'
@@ -87,4 +87,4 @@ const Header: React.FC = () => {
   )
 }
 
-export default Header
+export default memo(Header)

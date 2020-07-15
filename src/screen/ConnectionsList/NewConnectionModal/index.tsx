@@ -1,16 +1,19 @@
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, memo } from 'react'
 import { FiActivity, FiSave } from 'react-icons/fi'
 import { useToggle } from 'react-use'
+import { useSetRecoilState } from 'recoil'
 import * as Yup from 'yup'
 
-import { useToast } from '../../context/toast'
-import { testConnection } from '../../services/connection/TestConnectionService'
-import getValidationErrors from '../../utils/getValidationErrors'
-import Button from '../Button'
-import Input from '../Form/Input'
-import Modal, { ModalProps } from '../Modal'
+import { connectionsState } from '../../../atoms/connections'
+import Button from '../../../components/Button'
+import Input from '../../../components/Form/Input'
+import Modal, { SharedModalProps } from '../../../components/Modal'
+import { useToast } from '../../../context/toast'
+import { saveAndGetConnections } from '../../../services/connection/SaveConnectionService'
+import { testConnection } from '../../../services/connection/TestConnectionService'
+import getValidationErrors from '../../../utils/getValidationErrors'
 import {
   ActionsContainer,
   ButtonGroup,
@@ -25,12 +28,13 @@ interface ConnectionFormData {
   password: string
 }
 
-const NewConnectionModal: React.FC<ModalProps> = ({
+const NewConnectionModal: React.FC<SharedModalProps> = ({
   visible,
   onRequestClose
 }) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
+  const setConnections = useSetRecoilState(connectionsState)
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
   const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
@@ -54,6 +58,33 @@ const NewConnectionModal: React.FC<ModalProps> = ({
         await schema.validate(data, {
           abortEarly: false
         })
+
+        const { name, host, port, password } = data
+
+        try {
+          const connections = saveAndGetConnections({
+            name,
+            host,
+            port: Number(port),
+            password
+          })
+
+          setConnections(connections)
+
+          addToast({
+            type: 'success',
+            title: 'Connection saved',
+            description: 'You can now connect to your database!'
+          })
+
+          handleCloseModal()
+        } catch (err) {
+          addToast({
+            type: 'error',
+            title: 'Error saving connection',
+            description: err.message || 'Unexpected error occurred, try again.'
+          })
+        }
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -122,7 +153,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
     }
   }, [])
 
-  const handleCancel = useCallback(() => {
+  const handleCloseModal = useCallback(() => {
     if (onRequestClose) {
       onRequestClose()
     }
@@ -165,7 +196,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
           </TestConnectionButton>
 
           <ButtonGroup>
-            <Button onClick={handleCancel} type="button" color="opaque">
+            <Button onClick={handleCloseModal} type="button" color="opaque">
               Cancel
             </Button>
             <Button
@@ -183,4 +214,4 @@ const NewConnectionModal: React.FC<ModalProps> = ({
   )
 }
 
-export default NewConnectionModal
+export default memo(NewConnectionModal)
