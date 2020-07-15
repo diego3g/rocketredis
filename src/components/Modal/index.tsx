@@ -1,12 +1,14 @@
-import React, { useState, useCallback, useEffect, memo } from 'react'
+import React, { useState, useCallback, useEffect, memo, ReactNode } from 'react'
 import ReactModal from 'react-modal'
 
 import { Container } from './styles'
 
-export interface ModalProps {
+export interface SharedModalProps {
   visible?: boolean
   onRequestClose?: () => void
 }
+
+type ModalProps = React.PropsWithChildren<SharedModalProps>
 
 const Modal: React.FC<ModalProps> = ({
   visible = false,

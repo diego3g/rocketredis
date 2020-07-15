@@ -9,7 +9,7 @@ import * as Yup from 'yup'
 import { connectionsState } from '../../../atoms/connections'
 import Button from '../../../components/Button'
 import Input from '../../../components/Form/Input'
-import Modal, { ModalProps } from '../../../components/Modal'
+import Modal, { SharedModalProps } from '../../../components/Modal'
 import { useToast } from '../../../context/toast'
 import { saveAndGetConnections } from '../../../services/connection/SaveConnectionService'
 import { testConnection } from '../../../services/connection/TestConnectionService'
@@ -28,7 +28,7 @@ interface ConnectionFormData {
   password: string
 }
 
-const NewConnectionModal: React.FC<ModalProps> = ({
+const NewConnectionModal: React.FC<SharedModalProps> = ({
   visible,
   onRequestClose
 }) => {
@@ -82,7 +82,7 @@ const NewConnectionModal: React.FC<ModalProps> = ({
           addToast({
             type: 'error',
             title: 'Error saving connection',
-            description: err.message || 'Unexpected error ocurred, try again.'
+            description: err.message || 'Unexpected error occurred, try again.'
           })
         }
       } catch (err) {
