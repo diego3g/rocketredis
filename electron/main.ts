@@ -1,8 +1,16 @@
-import { app, BrowserWindow, nativeImage } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  nativeImage,
+  Menu,
+  shell,
+  MenuItemConstructorOptions
+} from 'electron'
 import { autoUpdater } from 'electron-updater'
 import * as path from 'path'
 import * as url from 'url'
 
+import i18n from '../i18n'
 import {
   getWindowBounds,
   setWindowBounds
@@ -50,8 +58,65 @@ function createWindow() {
   })
 }
 
+async function createMenu() {
+  await i18n.loadNamespaces('applicationMenu')
+
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: 'Rocketredis',
+      submenu: [
+        {
+          label: i18n.t('applicationMenu:newConnection'),
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            mainWindow?.webContents.send('newConnection')
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: i18n.t('applicationMenu:exit'),
+          role: 'quit',
+          accelerator: 'CmdOrCtrl+Q'
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
+      ]
+    },
+    {
+      role: 'help',
+      submenu: [
+        {
+          label: 'Learn More',
+          click: () => {
+            shell.openExternal('https://github.com/diego3g/rocketredis/')
+          }
+        }
+      ]
+    }
+  ]
+
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+}
+
 app.on('ready', () => {
   createWindow()
   autoUpdater.checkForUpdatesAndNotify()
+  createMenu()
 })
+
 app.allowRendererProcessReuse = true

@@ -1,8 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
+import { ipcRenderer } from 'electron'
 import { useRecoilState } from 'recoil'
 
 import { connectionsState } from '../../atoms/connections'
@@ -14,6 +15,14 @@ const ConnectionsList: React.FC = () => {
   const [connections] = useRecoilState(connectionsState)
   const [isCreateModalOpen, toggleCreateModalOpen] = useToggle(false)
   const { t } = useTranslation('connectionList')
+
+  useEffect(() => {
+    ipcRenderer.addListener('newConnection', toggleCreateModalOpen)
+
+    return () => {
+      ipcRenderer.removeListener('newConnection', toggleCreateModalOpen)
+    }
+  }, [toggleCreateModalOpen])
 
   return (
     <>
