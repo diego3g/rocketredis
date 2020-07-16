@@ -904,7 +904,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@7.10.4", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2", "@babel/runtime@^7.9.6":
+"@babel/runtime@7.10.4", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2", "@babel/runtime@^7.9.6":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.4.tgz#a6724f1a6b8d2f6ea5236dbfe58c7d7ea9c5eb99"
   integrity sha512-UpTN5yUJr9b4EX2CnGNWIvER7Ab83ibv0pcvvHc4UOdrBI5jb8bj+32cCwPX6xu0mt2daFNjYhoi+X7beH0RSw==
@@ -5694,19 +5694,17 @@ hyphenate-style-name@^1.0.2:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
   integrity sha512-EcuixamT82oplpoJ2XU4pDtKGWQ7b00CD9f1ug9IaQ3p1bkHMiKCZ9ut9QDI6qsa6cpUuB+A/I+zLtdNK4n2DQ==
 
-i18next-browser-languagedetector@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-5.0.0.tgz#9e946ed2ea5514a636913fe020a32455e82946e3"
-  integrity sha512-ekeKbRvTOsSOABSEPHFqyb6Q37JagZXjkISgQKHP84t/VZRW/B3FMVz+tBNQDVdZLsEaOe8fuJpeZsw2TvWeVQ==
-  dependencies:
-    "@babel/runtime" "^7.5.5"
+i18next-electron-language-detector@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/i18next-electron-language-detector/-/i18next-electron-language-detector-0.0.10.tgz#6fdb01df5a47c40ca3821458449da88220c4baf8"
+  integrity sha512-l/CdtK5i6BB7h5OGKadUK+Q0q4e4EYXZSDV+Hetxjdv4C8RoYPNbqfTIpcc4RpIO3Dty05Xt8TxV+HyFd6opeA==
 
 i18next-fs-backend@1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-1.0.7.tgz#00ca4587e306f8948740408389dda73461a5d07f"
   integrity sha512-aAZ3rvshe1Zbl6JSCWrWWqbZS5JpmVNG+84YqLcgdYcm9uAxzw4xWxnA/a3044Nm2PKXE62CT+pIZjk7OEYtTw==
 
-i18next@19.6.0, i18next@>=17.0.11:
+i18next@19.6.0:
   version "19.6.0"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.6.0.tgz#3881b8e476e494dcdadcc8983e594080417fd82e"
   integrity sha512-t+pA7iN2WtwS1UQc4PFKHDIO4HYZIl2Wo8UC8gqt70Q1qY50FflAF5vV4IbQEqy4DuK3I9wv3BL1PMvkk238WA==
