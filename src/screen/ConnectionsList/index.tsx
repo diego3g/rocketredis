@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
@@ -12,6 +13,7 @@ import { Container, Connections } from './styles'
 const ConnectionsList: React.FC = () => {
   const [connections] = useRecoilState(connectionsState)
   const [isCreateModalOpen, toggleCreateModalOpen] = useToggle(false)
+  const { t } = useTranslation('connectionList')
 
   return (
     <>
@@ -24,7 +26,7 @@ const ConnectionsList: React.FC = () => {
       >
         <Connections>
           <header>
-            <strong>CONNECTIONS</strong>
+            <strong>{t('title')}</strong>
             <button type="button" onClick={toggleCreateModalOpen}>
               <FiPlusCircle />
             </button>

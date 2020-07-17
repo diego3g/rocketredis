@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiDatabase, FiChevronRight, FiLoader } from 'react-icons/fi'
 
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -36,6 +37,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   const [databases, setDatabases] = useState<IDatabase[]>([])
   const [isConnecting, setIsConnecting] = useState(false)
   const [isConnectionFailed, setIsConnectionFailed] = useState(false)
+  const { t } = useTranslation('connection')
 
   const { addToast } = useToast()
 
@@ -126,7 +128,9 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
               type="button"
             >
               <strong>{database.name}</strong>
-              <span>{database.keys} keys</span>
+              <span>
+                {database.keys} {t('keys')}
+              </span>
             </Database>
           ))}
         </DatabaseList>
@@ -134,9 +138,9 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
 
       {isConnectionFailed && (
         <ConnectionError>
-          Connection failed.{' '}
+          {t('connectionFailed')}{' '}
           <button type="button" onClick={handleConnect}>
-            Retry?
+            {t('retry')}
           </button>
         </ConnectionError>
       )}

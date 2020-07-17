@@ -7,6 +7,7 @@ import React, {
   ChangeEvent,
   useMemo
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDebounce } from 'react-use'
 import { useVirtual } from 'react-virtual'
 
@@ -38,6 +39,7 @@ const KeyList: React.FC = () => {
   const parentRef = useRef(null)
 
   const { width } = useWindowSize({ watch: false })
+  const { t } = useTranslation('keyList')
 
   const [searchInputValue, setSearchInputValue] = useState('')
   const [filter, setFilter] = useState('')
@@ -105,7 +107,9 @@ const KeyList: React.FC = () => {
               <HeaderTitle>{currentConnection?.name}</HeaderTitle>
               <HeaderDatabaseDetails>
                 <span>{currentDatabase?.name}</span>
-                <span>{currentDatabase?.keys} keys</span>
+                <span>
+                  {currentDatabase?.keys} {t('keys')}
+                </span>
               </HeaderDatabaseDetails>
             </HeaderTextContainer>
             <SearchInput
@@ -148,7 +152,7 @@ const KeyList: React.FC = () => {
           </KeyListWrapper>
         </>
       ) : (
-        <EmptyContent message="No database selected" />
+        <EmptyContent message={t('empty')} />
       )}
     </Container>
   )

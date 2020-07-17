@@ -3,14 +3,6 @@
     "title": "CONNECTIONS"
   },
   "newConnection": {
-    "title": "New connection",
-    "connectionName": "Connection name",
-    "host": "Host",
-    "port": "Port",
-    "password": "Password",
-    "passwordHint": "Leave empty for no password",
-    "testConnectionButtonLabel": "Test connection",
-    "cancelButtonLabel": "Cancel",
-    "saveButtonLabel": "Save"
+    
   }
 }
