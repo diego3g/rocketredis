@@ -1,5 +1,14 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
-import { FiDatabase, FiChevronRight, FiLoader } from 'react-icons/fi'
+import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
+import {
+  FiDatabase,
+  FiChevronRight,
+  FiLoader,
+  FiMinusCircle,
+  FiEdit2,
+  FiRefreshCcw,
+  FiTrash
+} from 'react-icons/fi'
 import { useRecoilState } from 'recoil'
 
 import {
@@ -71,17 +80,46 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       connected={isConnected}
       errored={isConnectionFailed}
     >
-      <button type="button" disabled={isConnected} onClick={handleConnect}>
-        {isConnecting ? (
-          <Loading>
-            <FiLoader />
-          </Loading>
-        ) : (
-          <FiDatabase />
+      <ContextMenuTrigger id="connection_actions_menu">
+        <button type="button" onClick={handleConnect}>
+          {isConnecting ? (
+            <Loading>
+              <FiLoader />
+            </Loading>
+          ) : (
+            <FiDatabase />
+          )}
+          {connection.name}
+          <FiChevronRight />
+        </button>
+      </ContextMenuTrigger>
+
+      <ContextMenu
+        id="connection_actions_menu"
+        className="connection-actions-menu"
+      >
+        <MenuItem>
+          <FiMinusCircle />
+          {isConnected ? 'Disconnect' : 'Connect'}
+        </MenuItem>
+
+        <MenuItem>
+          <FiEdit2 />
+          Edit Settings
+        </MenuItem>
+
+        {isConnected && (
+          <MenuItem>
+            <FiRefreshCcw />
+            Refresh databases
+          </MenuItem>
         )}
-        {connection.name}
-        <FiChevronRight />
-      </button>
+
+        <MenuItem>
+          <FiTrash />
+          Delete connection
+        </MenuItem>
+      </ContextMenu>
 
       {isConnected && !!databases.length && (
         <DatabaseList>

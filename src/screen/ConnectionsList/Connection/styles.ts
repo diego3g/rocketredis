@@ -6,7 +6,7 @@ interface IContainerProps {
 }
 
 export const Container = styled.li<IContainerProps>`
-  > button {
+  > div > button {
     width: 100%;
     padding: 16px;
     display: flex;
@@ -50,6 +50,45 @@ export const Container = styled.li<IContainerProps>`
           }
         }
       `}
+  }
+
+  .connection-actions-menu {
+    width: 220;
+    z-index: 1;
+    background: ${props => props.theme.backgrounds.darker};
+    border: 1px solid ${props => props.theme.backgrounds.lightest};
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    > div {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      padding: 16px;
+      cursor: pointer;
+
+      :hover {
+        background: ${props => props.theme.backgrounds.dark};
+      }
+
+      svg {
+        margin-right: 8px;
+        color: #9696a7;
+      }
+
+      :first-child {
+        ${props =>
+          props.connected &&
+          css`
+            color: ${props => props.theme.colors.red};
+
+            svg {
+              color: ${props => props.theme.colors.red};
+            }
+          `}
+      }
+    }
   }
 
   ${props =>
