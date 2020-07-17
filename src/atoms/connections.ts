@@ -11,6 +11,7 @@ export interface IConnection {
 
 export interface IDatabase {
   name: string
+  index: number
   keys: number
 }
 
@@ -26,5 +27,10 @@ export const currentConnectionState = atom<IConnection | undefined>({
 
 export const currentDatabaseState = atom<IDatabase | undefined>({
   key: 'currentDatabase',
+  default: undefined
+})
+
+export const currentKeyState = atom<string | undefined>({
+  key: 'currentKey',
   default: undefined
 })

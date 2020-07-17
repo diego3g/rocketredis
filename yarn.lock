@@ -1447,6 +1447,11 @@
     native-url "^0.2.6"
     schema-utils "^2.6.5"
 
+"@reach/observe-rect@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
+  integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -8673,6 +8678,14 @@ react-use@15.3.2:
     ts-easing "^0.2.0"
     tslib "^2.0.0"
 
+react-virtual@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-virtual/-/react-virtual-2.2.1.tgz#639741f203b683630457836e85ddbba7a732d9b5"
+  integrity sha512-71wjhbm/WgFRKaaS/oAN6znUpQkdSdbRfg3jCyvgP45QAbBKH3lSiTR/nLawgqhlwGjcYp9jN94MLNW1UVoobQ==
+  dependencies:
+    "@reach/observe-rect" "^1.1.0"
+    ts-toolbelt "^6.4.2"
+
 react@16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
@@ -10316,6 +10329,11 @@ ts-jest@26.1.2:
     mkdirp "1.x"
     semver "7.x"
     yargs-parser "18.x"
+
+ts-toolbelt@^6.4.2:
+  version "6.13.6"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.13.6.tgz#4c9fad69bb3389323fe60982f18cd06b72f7d42a"
+  integrity sha512-qqIexrhqCNOuSRCrJMOKor8UJxA4DYMB6fNpBmRAKJgmLXNj8TAiuCrs7Nm08fva+MEdQhEXmsnjBQarNSIWZg==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"

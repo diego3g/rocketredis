@@ -1,14 +1,18 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
 import { FiDatabase, FiChevronRight, FiLoader } from 'react-icons/fi'
-import { useRecoilState } from 'recoil'
+
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import {
   IConnection,
   currentConnectionState,
   IDatabase,
-  currentDatabaseState
+  currentDatabaseState,
+  currentKeyState
 } from '../../../atoms/connections'
+import { useToast } from '../../../context/toast'
 import { loadConnectionDatabases } from '../../../services/connection/LoadConnectionDatabases'
+import { initializeConnection } from '../../../services/RedisConnection'
 import {
   Container,
   DatabaseList,
@@ -28,9 +32,12 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   const [currentDatabase, setCurrentDatabase] = useRecoilState(
     currentDatabaseState
   )
+  const setCurrentKey = useSetRecoilState(currentKeyState)
   const [databases, setDatabases] = useState<IDatabase[]>([])
   const [isConnecting, setIsConnecting] = useState(false)
   const [isConnectionFailed, setIsConnectionFailed] = useState(false)
+
+  const { addToast } = useToast()
 
   useEffect(() => {
     if (currentConnection) {
@@ -46,6 +53,8 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
     if (!isConnected) {
       setIsConnecting(true)
       setCurrentConnection(undefined)
+      setCurrentDatabase(undefined)
+      setCurrentKey(undefined)
 
       try {
         const databases = await loadConnectionDatabases(connection)
@@ -59,11 +68,35 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         setIsConnecting(false)
       }
     }
-  }, [])
+  }, [
+    connection,
+    isConnected,
+    setCurrentConnection,
+    setCurrentDatabase,
+    setCurrentKey
+  ])
 
-  const handleSelectDatabase = useCallback((database: IDatabase) => {
-    setCurrentDatabase(database)
-  }, [])
+  const handleSelectDatabase = useCallback(
+    async (database: IDatabase) => {
+      if (!currentConnection) {
+        return
+      }
+
+      try {
+        await initializeConnection(currentConnection, database)
+
+        setCurrentDatabase(database)
+      } catch {
+        addToast({
+          type: 'error',
+          title: 'Failed to connect to database',
+          description:
+            'A connection to this Redis database could not be established.'
+        })
+      }
+    },
+    [currentConnection]
+  )
 
   return (
     <Container

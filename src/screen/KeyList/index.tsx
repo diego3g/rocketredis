@@ -1,73 +1,152 @@
-import React, { memo } from 'react'
-import { FiFolder } from 'react-icons/fi'
+import React, {
+  memo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  ChangeEvent,
+  useMemo
+} from 'react'
+import { useDebounce } from 'react-use'
+import { useVirtual } from 'react-virtual'
 
+import { useRecoilState } from 'recoil'
+
+import {
+  currentConnectionState,
+  currentDatabaseState,
+  currentKeyState
+} from '../../atoms/connections'
+import EmptyContent from '../../components/EmptyContent'
 import { useWindowSize } from '../../hooks/useWindowSize'
+import { loadKeysFromDatabase } from '../../services/database/LoadKeysFromDatabase'
 import SearchInput from './SearchInput'
 import {
   Container,
   Header,
   HeaderTitle,
   HeaderTextContainer,
-  HeaderTotalKeys,
+  HeaderDatabaseDetails,
+  KeyListWrapper,
   KeyListContainer,
   Key,
   KeyTextContainer,
-  KeyTitle,
-  KeyChidrenCount
+  KeyTitle
 } from './styles'
 
 const KeyList: React.FC = () => {
+  const parentRef = useRef(null)
+
   const { width } = useWindowSize({ watch: false })
+
+  const [searchInputValue, setSearchInputValue] = useState('')
+  const [filter, setFilter] = useState('')
+  const [keys, setKeys] = useState<string[]>([])
+
+  const [currentConnection] = useRecoilState(currentConnectionState)
+  const [currentDatabase] = useRecoilState(currentDatabaseState)
+  const [currentKey, setCurrentKey] = useRecoilState(currentKeyState)
+
+  useDebounce(
+    () => {
+      setFilter(searchInputValue)
+    },
+    500,
+    [searchInputValue]
+  )
+
+  const filteredKeys = useMemo(() => {
+    if (!filter) {
+      return keys
+    }
+
+    return keys.filter(key => key.includes(filter))
+  }, [filter, keys])
+
+  const rowVirtualizer = useVirtual({
+    size: filteredKeys.length,
+    parentRef,
+    estimateSize: useCallback(() => 33, [])
+  })
+
+  const handleSearchInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setSearchInputValue(e.target.value)
+    },
+    []
+  )
+
+  const handleSelectKey = useCallback((key: string) => {
+    setCurrentKey(key)
+  }, [])
+
+  useEffect(() => {
+    if (currentDatabase) {
+      loadKeysFromDatabase().then(loadedKeys => {
+        setKeys(loadedKeys)
+      })
+    }
+  }, [currentDatabase])
 
   return (
     <Container
       width={(width - 300) / 2}
       height={Infinity}
-      minConstraints={[340, Infinity]}
+      minConstraints={[500, Infinity]}
       maxConstraints={[width - 300 - 100, Infinity]}
     >
-      <Header>
-        <HeaderTextContainer>
-          <HeaderTitle>Localhost</HeaderTitle>
-          <HeaderTotalKeys>132 keys</HeaderTotalKeys>
-        </HeaderTextContainer>
-        <SearchInput />
-      </Header>
+      {currentDatabase ? (
+        <>
+          <Header>
+            <HeaderTextContainer>
+              <HeaderTitle>{currentConnection?.name}</HeaderTitle>
+              <HeaderDatabaseDetails>
+                <span>{currentDatabase?.name}</span>
+                <span>{currentDatabase?.keys} keys</span>
+              </HeaderDatabaseDetails>
+            </HeaderTextContainer>
+            <SearchInput
+              onChange={handleSearchInputChange}
+              value={searchInputValue}
+            />
+          </Header>
 
-      <KeyListContainer>
-        <Key>
-          <KeyTextContainer>
-            <KeyTitle>mail-queue</KeyTitle>
-            {true && <KeyChidrenCount>(132 keys)</KeyChidrenCount>}
-          </KeyTextContainer>
+          <KeyListWrapper ref={parentRef}>
+            <KeyListContainer
+              style={{
+                height: `${rowVirtualizer.totalSize}px`
+              }}
+            >
+              {rowVirtualizer.virtualItems.map(virtualRow => {
+                const key = filteredKeys[virtualRow.index]
 
-          {true && <FiFolder />}
-        </Key>
-        <Key>
-          <KeyTextContainer>
-            <KeyTitle>cache</KeyTitle>
-            {true && <KeyChidrenCount>(25 keys)</KeyChidrenCount>}
-          </KeyTextContainer>
-
-          {true && <FiFolder />}
-        </Key>
-        <Key>
-          <KeyTextContainer>
-            <KeyTitle>single-key-without-children</KeyTitle>
-            {false && <KeyChidrenCount>(132 keys)</KeyChidrenCount>}
-          </KeyTextContainer>
-
-          {false && <FiFolder />}
-        </Key>
-        <Key>
-          <KeyTextContainer>
-            <KeyTitle>another-key</KeyTitle>
-            {false && <KeyChidrenCount>(132 keys)</KeyChidrenCount>}
-          </KeyTextContainer>
-
-          {false && <FiFolder />}
-        </Key>
-      </KeyListContainer>
+                return (
+                  <Key
+                    key={virtualRow.index}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualRow.size}px`,
+                      transform: `translateY(${virtualRow.start}px)`
+                    }}
+                  >
+                    <KeyTextContainer
+                      selected={currentKey === key}
+                      onClick={() => handleSelectKey(key)}
+                    >
+                      <KeyTitle>{key}</KeyTitle>
+                    </KeyTextContainer>
+                  </Key>
+                )
+              })}
+            </KeyListContainer>
+          </KeyListWrapper>
+        </>
+      ) : (
+        <EmptyContent message="No database selected" />
+      )}
     </Container>
   )
 }
