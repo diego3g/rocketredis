@@ -76,9 +76,12 @@ const KeyList: React.FC = () => {
     []
   )
 
-  const handleSelectKey = useCallback((key: string) => {
-    setCurrentKey(key)
-  }, [])
+  const handleSelectKey = useCallback(
+    (key: string) => {
+      setCurrentKey(key)
+    },
+    [setCurrentKey]
+  )
 
   useEffect(() => {
     if (currentDatabase) {

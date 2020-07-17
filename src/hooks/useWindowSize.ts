@@ -33,7 +33,7 @@ export function useWindowSize({
         window.removeEventListener('resize', handleResize)
       }
     }
-  }, [])
+  }, [watch])
 
   return windowSize
 }

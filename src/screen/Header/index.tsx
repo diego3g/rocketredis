@@ -1,7 +1,8 @@
-import { remote } from 'electron'
-import os from 'os'
 import React, { useCallback, useMemo, memo } from 'react'
 import { FiX, FiMinus, FiMaximize2, FiSquare } from 'react-icons/fi'
+
+import { remote } from 'electron'
+import os from 'os'
 
 import { useConfig } from '../../hooks/useConfig'
 import {

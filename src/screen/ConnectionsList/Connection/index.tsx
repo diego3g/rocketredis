@@ -47,7 +47,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
 
   const isConnected = useMemo(() => {
     return currentConnection?.name === connection.name
-  }, [currentConnection?.name])
+  }, [currentConnection?.name, connection.name])
 
   const handleConnect = useCallback(async () => {
     if (!isConnected) {
@@ -95,7 +95,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         })
       }
     },
-    [currentConnection]
+    [currentConnection, addToast, setCurrentDatabase]
   )
 
   return (
