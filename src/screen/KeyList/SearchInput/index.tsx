@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, InputHTMLAttributes } from 'react'
 import { FiSearch } from 'react-icons/fi'
 
 import { Container } from './styles'
 
-const SearchInput: React.FC = ({ ...rest }) => {
+type SearchInputProps = InputHTMLAttributes<HTMLInputElement>
+
+const SearchInput: React.FC<SearchInputProps> = ({ ...rest }) => {
   const [isFocused, setIsFocused] = useState(false)
 
   const handleInputFocus = useCallback(() => {

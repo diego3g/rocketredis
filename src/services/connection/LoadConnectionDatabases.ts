@@ -22,17 +22,18 @@ export function loadConnectionDatabases(
         .split('\n')
         .slice(1)
         .reduce((databases: IDatabase[] = [], databaseLine) => {
-          const matched = /(db[0-9]{1,}):keys=([0-9]{1,}).+/gi.exec(
+          const matched = /db([0-9]{1,}):keys=([0-9]{1,}).+/gi.exec(
             databaseLine
           )
 
           if (matched) {
-            const [, db, keys] = matched
+            const [, index, keys] = matched
 
             return [
               ...databases,
               {
-                name: db,
+                name: `db${index}`,
+                index: Number(index),
                 keys: Number(keys)
               }
             ]
