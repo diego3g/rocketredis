@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiActivity, FiSave } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
@@ -36,6 +37,7 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
   const setConnections = useSetRecoilState(connectionsState)
+  const { t } = useTranslation('newConnection')
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
   const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
@@ -162,7 +164,7 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
 
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
-      <h1>New connection</h1>
+      <h1>{t('title')}</h1>
 
       <Form
         initialData={{
@@ -172,18 +174,18 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
         ref={formRef}
         onSubmit={handleCreateConnection}
       >
-        <Input name="name" label="Connection name" />
+        <Input name="name" label={t('form.name')} />
 
         <InputGroup>
-          <Input name="host" label="Host" />
-          <Input name="port" label="Port" />
+          <Input name="host" label={t('form.host')} />
+          <Input name="port" label={t('form.port')} />
         </InputGroup>
 
         <Input
           type="password"
           name="password"
-          label="Password"
-          hint="Leave empty for no password"
+          label={t('form.password')}
+          hint={t('form.passwordHint')}
         />
 
         <ActionsContainer>
@@ -193,12 +195,12 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
             onClick={handleTestConnection}
           >
             <FiActivity />
-            Test connection
+            {t('form.test')}
           </TestConnectionButton>
 
           <ButtonGroup>
             <Button onClick={handleCloseModal} type="button" color="opaque">
-              Cancel
+              {t('form.cancel')}
             </Button>
             <Button
               loading={createConnectionLoading}
@@ -206,7 +208,7 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
               color="purple"
             >
               <FiSave />
-              Save
+              {t('form.save')}
             </Button>
           </ButtonGroup>
         </ActionsContainer>
