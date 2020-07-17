@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useToggle } from 'react-use'
+
 import { useRecoilState } from 'recoil'
 
 import { connectionsState } from '../../atoms/connections'

@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Modal from 'react-modal'
+
 import { RecoilRoot } from 'recoil'
 import { ThemeProvider } from 'styled-components'
 
