@@ -57,6 +57,7 @@ export const Container = styled.li<IContainerProps>`
     z-index: 1;
     background: ${props => props.theme.backgrounds.darker};
     border: 1px solid ${props => props.theme.backgrounds.lightest};
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
