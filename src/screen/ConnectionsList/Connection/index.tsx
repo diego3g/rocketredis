@@ -81,7 +81,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       errored={isConnectionFailed}
     >
       <ContextMenuTrigger id="connection_actions_menu">
-        <button type="button" onClick={handleConnect}>
+        <button type="button" disabled={isConnected} onClick={handleConnect}>
           {isConnecting ? (
             <Loading>
               <FiLoader />
@@ -105,7 +105,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
 
         <MenuItem>
           <FiEdit2 />
-          Edit Settings
+          Edit settings
         </MenuItem>
 
         {isConnected && (

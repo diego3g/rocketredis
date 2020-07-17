@@ -18,6 +18,10 @@ export const Container = styled.li<IContainerProps>`
     border: 0;
     color: ${props => props.theme.colors.white};
 
+    :disabled {
+      pointer-events: none;
+    }
+
     svg:first-child {
       width: 16px;
       height: 16px;
@@ -55,6 +59,7 @@ export const Container = styled.li<IContainerProps>`
   .connection-actions-menu {
     width: 220;
     z-index: 1;
+    padding: 8px 0;
     background: ${props => props.theme.backgrounds.darker};
     border: 1px solid ${props => props.theme.backgrounds.lightest};
     border-radius: 5px;
@@ -65,8 +70,7 @@ export const Container = styled.li<IContainerProps>`
     > div {
       display: flex;
       align-items: center;
-      height: 32px;
-      padding: 16px;
+      padding: 8px 16px;
       cursor: pointer;
 
       :hover {
