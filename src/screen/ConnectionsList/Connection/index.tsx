@@ -99,19 +99,17 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         id={`connection_actions_menu:${connection.name}`}
         className="connection-actions-menu"
       >
-        <MenuItem>
-          {isConnected ? (
-            <>
-              <FiMinusCircle />
-              Disconnect
-            </>
-          ) : (
-            <>
-              <FiActivity />
-              Connect
-            </>
-          )}
-        </MenuItem>
+        {isConnected ? (
+          <MenuItem>
+            <FiMinusCircle />
+            Disconnect
+          </MenuItem>
+        ) : (
+          <MenuItem>
+            <FiActivity />
+            Connect
+          </MenuItem>
+        )}
 
         <MenuItem>
           <FiEdit2 />

@@ -84,14 +84,21 @@ export const Container = styled.li<IContainerProps>`
 
       :first-child {
         ${props =>
-          props.connected &&
-          css`
-            color: ${props => props.theme.colors.red};
+          props.connected
+            ? css`
+                color: ${props => props.theme.colors.red};
 
-            svg {
-              color: ${props => props.theme.colors.red};
-            }
-          `}
+                svg {
+                  color: ${props => props.theme.colors.red};
+                }
+              `
+            : css`
+                color: ${props => props.theme.colors.green};
+
+                svg {
+                  color: ${props => props.theme.colors.green};
+                }
+              `}
       }
     }
   }
