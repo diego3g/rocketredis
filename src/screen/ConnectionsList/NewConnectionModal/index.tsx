@@ -6,13 +6,14 @@ import { useToggle } from 'react-use'
 import { useSetRecoilState } from 'recoil'
 import * as Yup from 'yup'
 
-import { connectionsState } from '../../../atoms/connections'
+import { IConnection, connectionsState } from '../../../atoms/connections'
 import Button from '../../../components/Button'
 import Input from '../../../components/Form/Input'
 import Modal, { SharedModalProps } from '../../../components/Modal'
 import { useToast } from '../../../context/toast'
 import { saveAndGetConnections } from '../../../services/connection/SaveConnectionService'
 import { testConnection } from '../../../services/connection/TestConnectionService'
+import { updateAndGetConnections } from '../../../services/connection/UpdateConnectionService'
 import getValidationErrors from '../../../utils/getValidationErrors'
 import {
   ActionsContainer,
@@ -21,6 +22,10 @@ import {
   TestConnectionButton
 } from './styles'
 
+interface ConnectionModalProps extends SharedModalProps {
+  connectionToEdit?: IConnection
+}
+
 interface ConnectionFormData {
   name: string
   host: string
@@ -28,9 +33,10 @@ interface ConnectionFormData {
   password: string
 }
 
-const NewConnectionModal: React.FC<SharedModalProps> = ({
+const NewConnectionModal: React.FC<ConnectionModalProps> = ({
   visible,
-  onRequestClose
+  onRequestClose,
+  connectionToEdit
 }) => {
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
@@ -41,7 +47,7 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
     false
   )
 
-  const handleCreateConnection = useCallback(
+  const handleCreateOrUpdateConnection = useCallback(
     async (data: ConnectionFormData) => {
       try {
         formRef.current?.setErrors({})
@@ -62,12 +68,16 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
         const { name, host, port, password } = data
 
         try {
-          const connections = saveAndGetConnections({
+          const newConnectionData = {
             name,
             host,
             port: Number(port),
             password
-          })
+          }
+
+          const connections = connectionToEdit
+            ? updateAndGetConnections(connectionToEdit, newConnectionData)
+            : saveAndGetConnections(newConnectionData)
 
           setConnections(connections)
 
@@ -165,11 +175,12 @@ const NewConnectionModal: React.FC<SharedModalProps> = ({
 
       <Form
         initialData={{
-          host: 'localhost',
-          port: '6379'
+          name: connectionToEdit?.name,
+          host: connectionToEdit?.host || 'localhost',
+          port: connectionToEdit?.port || '6379'
         }}
         ref={formRef}
-        onSubmit={handleCreateConnection}
+        onSubmit={handleCreateOrUpdateConnection}
       >
         <Input name="name" label="Connection name" />
 
