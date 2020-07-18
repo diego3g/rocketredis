@@ -4,6 +4,7 @@ import {
   FiDatabase,
   FiChevronRight,
   FiLoader,
+  FiActivity,
   FiMinusCircle,
   FiEdit2,
   FiRefreshCcw,
@@ -80,7 +81,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       connected={isConnected}
       errored={isConnectionFailed}
     >
-      <ContextMenuTrigger id="connection_actions_menu">
+      <ContextMenuTrigger id={`connection_actions_menu:${connection.name}`}>
         <button type="button" disabled={isConnected} onClick={handleConnect}>
           {isConnecting ? (
             <Loading>
@@ -95,12 +96,21 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       </ContextMenuTrigger>
 
       <ContextMenu
-        id="connection_actions_menu"
+        id={`connection_actions_menu:${connection.name}`}
         className="connection-actions-menu"
       >
         <MenuItem>
-          <FiMinusCircle />
-          {isConnected ? 'Disconnect' : 'Connect'}
+          {isConnected ? (
+            <>
+              <FiMinusCircle />
+              Disconnect
+            </>
+          ) : (
+            <>
+              <FiActivity />
+              Connect
+            </>
+          )}
         </MenuItem>
 
         <MenuItem>
