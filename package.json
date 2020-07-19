@@ -63,7 +63,7 @@
     "react-virtual": "2.2.1",
     "recoil": "0.0.10",
     "styled-components": "5.1.1",
-    "uuidv4": "6.1.1",
+    "uuidv4": "6.2.0",
     "wait-on": "5.1.0",
     "yup": "0.29.1"
   },
