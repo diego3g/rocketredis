@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo, ReactNode } from 'react'
+import React, { useState, useCallback, useEffect, memo } from 'react'
 import ReactModal from 'react-modal'
 
 import { Container } from './styles'
@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({
     }
 
     setIsOpen(false)
-  }, [])
+  }, [onRequestClose])
 
   return (
     <ReactModal

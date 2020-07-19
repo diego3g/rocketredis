@@ -8,12 +8,12 @@ export const Container = styled.div<InputContainerProps>`
   flex: 1;
   display: flex;
   align-items: center;
-  max-width: 300px;
+  max-width: 260px;
   border-radius: 4px;
   background: ${props => props.theme.backgrounds.darkest};
   border: 1px solid #322d41;
 
-  padding: 8px 16px;
+  padding: 7px 12px;
 
   transition: border 0.2s;
 

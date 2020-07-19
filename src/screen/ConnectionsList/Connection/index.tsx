@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
+import { useTranslation } from 'react-i18next'
 import {
   FiDatabase,
   FiChevronRight,
@@ -11,15 +12,19 @@ import {
   FiTrash
 } from 'react-icons/fi'
 import { useToggle } from 'react-use'
-import { useRecoilState } from 'recoil'
+
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import {
   IConnection,
   currentConnectionState,
   IDatabase,
-  currentDatabaseState
+  currentDatabaseState,
+  currentKeyState
 } from '../../../atoms/connections'
+import { useToast } from '../../../context/toast'
 import { loadConnectionDatabases } from '../../../services/connection/LoadConnectionDatabases'
+import { initializeConnection } from '../../../services/RedisConnection'
 import DeleteConnectionModal from '../DeleteConnectionModal'
 import NewConnectionModal from '../NewConnectionModal'
 import {
@@ -41,11 +46,15 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   const [currentDatabase, setCurrentDatabase] = useRecoilState(
     currentDatabaseState
   )
+  const setCurrentKey = useSetRecoilState(currentKeyState)
   const [databases, setDatabases] = useState<IDatabase[]>([])
   const [isConnecting, setIsConnecting] = useState(false)
   const [isConnectionFailed, setIsConnectionFailed] = useState(false)
   const [isEditModalOpen, toggleEditModalOpen] = useToggle(false)
   const [isDeleteModalOpen, toggleDeleteModalOpen] = useToggle(false)
+  const { t } = useTranslation('connection')
+
+  const { addToast } = useToast()
 
   useEffect(() => {
     if (currentConnection) {
@@ -61,6 +70,8 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
     if (!isConnected) {
       setIsConnecting(true)
       setCurrentConnection(undefined)
+      setCurrentDatabase(undefined)
+      setCurrentKey(undefined)
 
       try {
         const databases = await loadConnectionDatabases(connection)
@@ -74,7 +85,13 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         setIsConnecting(false)
       }
     }
-  }, [isConnected, connection, setCurrentConnection, setCurrentDatabase])
+  }, [
+    connection,
+    isConnected,
+    setCurrentConnection,
+    setCurrentDatabase,
+    setCurrentKey
+  ])
 
   const handleDisconnect = useCallback(async () => {
     setCurrentConnection(undefined)
@@ -109,10 +126,25 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   }, [toggleDeleteModalOpen, setCurrentConnection, setCurrentDatabase])
 
   const handleSelectDatabase = useCallback(
-    (database: IDatabase) => {
-      setCurrentDatabase(database)
+    async (database: IDatabase) => {
+      if (!currentConnection) {
+        return
+      }
+
+      try {
+        await initializeConnection(currentConnection, database)
+
+        setCurrentDatabase(database)
+      } catch {
+        addToast({
+          type: 'error',
+          title: 'Failed to connect to database',
+          description:
+            'A connection to this Redis database could not be established.'
+        })
+      }
     },
-    [setCurrentDatabase]
+    [currentConnection, addToast, setCurrentDatabase]
   )
 
   return (
@@ -180,7 +212,9 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
                 type="button"
               >
                 <strong>{database.name}</strong>
-                <span>{database.keys} keys</span>
+                <span>
+                  {database.keys} {t('keys')}
+                </span>
               </Database>
             ))}
           </DatabaseList>

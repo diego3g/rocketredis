@@ -1,7 +1,8 @@
+import { initReactI18next } from 'react-i18next'
+
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-electron-language-detector'
 import Backend from 'i18next-fs-backend'
-import { initReactI18next } from 'react-i18next'
 
 const options = {
   lng: 'en',

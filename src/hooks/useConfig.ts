@@ -19,7 +19,7 @@ export function useConfig<K extends keyof Schema>(
     })
 
     return unsubscribe
-  }, [])
+  }, [key])
 
   return value
 }
