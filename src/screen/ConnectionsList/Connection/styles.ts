@@ -6,7 +6,7 @@ interface IContainerProps {
 }
 
 export const Container = styled.li<IContainerProps>`
-  > button {
+  > div > button {
     width: 100%;
     padding: 16px;
     display: flex;
@@ -17,6 +17,10 @@ export const Container = styled.li<IContainerProps>`
     cursor: pointer;
     border: 0;
     color: ${props => props.theme.colors.white};
+
+    :disabled {
+      pointer-events: none;
+    }
 
     svg:first-child {
       width: 16px;
@@ -52,6 +56,35 @@ export const Container = styled.li<IContainerProps>`
       `}
   }
 
+  .connection-actions-menu {
+    width: 220px;
+    z-index: 1;
+    padding: 8px 0;
+    background: ${props => props.theme.backgrounds.darker};
+    border: 1px solid ${props => props.theme.backgrounds.lightest};
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    > div {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      cursor: pointer;
+
+      :hover {
+        background: ${props => props.theme.backgrounds.dark};
+      }
+
+      > svg {
+        margin-right: 8px;
+        color: #9696a7;
+      }
+    }
+  }
+
   ${props =>
     props.connected &&
     css`
@@ -63,6 +96,24 @@ export const Container = styled.li<IContainerProps>`
     css`
       background: ${props => props.theme.colors.red};
     `}
+`
+
+export const ConnectButton = styled.div`
+  color: ${props => props.theme.colors.green};
+
+  svg {
+    margin-right: 8px;
+    color: ${props => props.theme.colors.green};
+  }
+`
+
+export const DisconnectButton = styled.div`
+  color: ${props => props.theme.colors.red};
+
+  svg {
+    margin-right: 8px;
+    color: ${props => props.theme.colors.red};
+  }
 `
 
 export const DatabaseList = styled.div`

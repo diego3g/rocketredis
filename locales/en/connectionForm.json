@@ -1,5 +1,6 @@
 {
-  "title": "New connection",
+  "newConnectionTitle": "New connection",
+  "editConnectionTitle": "Edit connection",
   "form": {
     "name": "Connection name",
     "host": "Host",

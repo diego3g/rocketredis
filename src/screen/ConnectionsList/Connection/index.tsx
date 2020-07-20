@@ -1,6 +1,17 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
+import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import { useTranslation } from 'react-i18next'
-import { FiDatabase, FiChevronRight, FiLoader } from 'react-icons/fi'
+import {
+  FiDatabase,
+  FiChevronRight,
+  FiLoader,
+  FiActivity,
+  FiMinusCircle,
+  FiEdit2,
+  FiRefreshCcw,
+  FiTrash
+} from 'react-icons/fi'
+import { useToggle } from 'react-use'
 
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
@@ -13,13 +24,20 @@ import {
 } from '../../../atoms/connections'
 import { useToast } from '../../../context/toast'
 import { loadConnectionDatabases } from '../../../services/connection/LoadConnectionDatabases'
-import { initializeConnection } from '../../../services/RedisConnection'
+import {
+  initializeConnection,
+  terminateConnection
+} from '../../../services/RedisConnection'
+import ConnectionFormModal from '../ConnectionFormModal'
+import DeleteConnectionModal from '../DeleteConnectionModal'
 import {
   Container,
   DatabaseList,
   ConnectionError,
   Database,
-  Loading
+  Loading,
+  ConnectButton,
+  DisconnectButton
 } from './styles'
 
 interface IConnectionProps {
@@ -35,8 +53,10 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   )
   const setCurrentKey = useSetRecoilState(currentKeyState)
   const [databases, setDatabases] = useState<IDatabase[]>([])
-  const [isConnecting, setIsConnecting] = useState(false)
+  const [connectionLoading, setConnectionLoading] = useState(false)
   const [isConnectionFailed, setIsConnectionFailed] = useState(false)
+  const [isEditModalOpen, toggleEditModalOpen] = useToggle(false)
+  const [isDeleteModalOpen, toggleDeleteModalOpen] = useToggle(false)
   const { t } = useTranslation('connection')
 
   const { addToast } = useToast()
@@ -53,7 +73,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
 
   const handleConnect = useCallback(async () => {
     if (!isConnected) {
-      setIsConnecting(true)
+      setConnectionLoading(true)
       setCurrentConnection(undefined)
       setCurrentDatabase(undefined)
       setCurrentKey(undefined)
@@ -67,7 +87,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       } catch {
         setIsConnectionFailed(true)
       } finally {
-        setIsConnecting(false)
+        setConnectionLoading(false)
       }
     }
   }, [
@@ -77,6 +97,40 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
     setCurrentDatabase,
     setCurrentKey
   ])
+
+  const handleDisconnect = useCallback(async () => {
+    setCurrentConnection(undefined)
+    setCurrentDatabase(undefined)
+    terminateConnection()
+  }, [setCurrentConnection, setCurrentDatabase])
+
+  const handleRefreshDatabases = useCallback(async () => {
+    try {
+      setConnectionLoading(true)
+
+      const databases = await loadConnectionDatabases(connection)
+
+      setDatabases(databases)
+    } catch {
+      setIsConnectionFailed(true)
+    } finally {
+      setConnectionLoading(false)
+    }
+  }, [connection])
+
+  const postSavingConnection = useCallback(async () => {
+    toggleEditModalOpen()
+    setCurrentConnection(undefined)
+    setCurrentDatabase(undefined)
+    setIsConnectionFailed(false)
+  }, [toggleEditModalOpen, setCurrentConnection, setCurrentDatabase])
+
+  const postDeletingConnection = useCallback(async () => {
+    toggleDeleteModalOpen()
+    setCurrentConnection(undefined)
+    setCurrentDatabase(undefined)
+    terminateConnection()
+  }, [toggleDeleteModalOpen, setCurrentConnection, setCurrentDatabase])
 
   const handleSelectDatabase = useCallback(
     async (database: IDatabase) => {
@@ -88,6 +142,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         await initializeConnection(currentConnection, database)
 
         setCurrentDatabase(database)
+        setCurrentKey(undefined)
       } catch {
         addToast({
           type: 'error',
@@ -97,54 +152,108 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         })
       }
     },
-    [currentConnection, addToast, setCurrentDatabase]
+    [currentConnection, addToast, setCurrentDatabase, setCurrentKey]
   )
 
   return (
-    <Container
-      key={connection.name}
-      connected={isConnected}
-      errored={isConnectionFailed}
-    >
-      <button type="button" disabled={isConnected} onClick={handleConnect}>
-        {isConnecting ? (
-          <Loading>
-            <FiLoader />
-          </Loading>
-        ) : (
-          <FiDatabase />
-        )}
-        {connection.name}
-        <FiChevronRight />
-      </button>
-
-      {isConnected && !!databases.length && (
-        <DatabaseList>
-          {databases.map(database => (
-            <Database
-              connected={currentDatabase?.name === database.name}
-              key={database.name}
-              onClick={() => handleSelectDatabase(database)}
-              type="button"
-            >
-              <strong>{database.name}</strong>
-              <span>
-                {database.keys} {t('keys')}
-              </span>
-            </Database>
-          ))}
-        </DatabaseList>
-      )}
-
-      {isConnectionFailed && (
-        <ConnectionError>
-          {t('connectionFailed')}{' '}
-          <button type="button" onClick={handleConnect}>
-            {t('retry')}
+    <>
+      <Container
+        key={connection.name}
+        connected={isConnected}
+        errored={isConnectionFailed}
+      >
+        <ContextMenuTrigger id={`connection_actions_menu:${connection.name}`}>
+          <button type="button" disabled={isConnected} onClick={handleConnect}>
+            {connectionLoading ? (
+              <Loading>
+                <FiLoader />
+              </Loading>
+            ) : (
+              <FiDatabase />
+            )}
+            {connection.name}
+            <FiChevronRight />
           </button>
-        </ConnectionError>
-      )}
-    </Container>
+        </ContextMenuTrigger>
+
+        <ContextMenu
+          id={`connection_actions_menu:${connection.name}`}
+          className="connection-actions-menu"
+        >
+          {isConnected ? (
+            <MenuItem onClick={handleDisconnect}>
+              <DisconnectButton>
+                <FiMinusCircle />
+                {t('contextMenu.disconnect')}
+              </DisconnectButton>
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={handleConnect}>
+              <ConnectButton>
+                <FiActivity />
+                {t('contextMenu.connect')}
+              </ConnectButton>
+            </MenuItem>
+          )}
+
+          <MenuItem onClick={toggleEditModalOpen}>
+            <FiEdit2 />
+            {t('contextMenu.editSettings')}
+          </MenuItem>
+
+          {isConnected && (
+            <MenuItem onClick={handleRefreshDatabases}>
+              <FiRefreshCcw />
+              {t('contextMenu.refreshDatabases')}
+            </MenuItem>
+          )}
+
+          <MenuItem onClick={toggleDeleteModalOpen}>
+            <FiTrash />
+            {t('contextMenu.deleteConnection')}
+          </MenuItem>
+        </ContextMenu>
+
+        {isConnected && !!databases.length && (
+          <DatabaseList>
+            {databases.map(database => (
+              <Database
+                connected={currentDatabase?.name === database.name}
+                key={database.name}
+                onClick={() => handleSelectDatabase(database)}
+                type="button"
+              >
+                <strong>{database.name}</strong>
+                <span>
+                  {database.keys} {t('keys')}
+                </span>
+              </Database>
+            ))}
+          </DatabaseList>
+        )}
+
+        {isConnectionFailed && (
+          <ConnectionError>
+            {t('connectionFailed')}{' '}
+            <button type="button" onClick={handleConnect}>
+              {t('retry')}
+            </button>
+          </ConnectionError>
+        )}
+      </Container>
+
+      <ConnectionFormModal
+        visible={isEditModalOpen}
+        onRequestClose={postSavingConnection}
+        connectionToEdit={connection}
+      />
+
+      <DeleteConnectionModal
+        visible={isDeleteModalOpen}
+        onRequestClose={postDeletingConnection}
+        connectionToDelete={connection}
+      />
+    </>
   )
 }
 

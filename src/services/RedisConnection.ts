@@ -33,4 +33,10 @@ function initializeConnection(
   })
 }
 
-export { connection, initializeConnection }
+function terminateConnection(): void {
+  if (connection) {
+    connection.disconnect()
+  }
+}
+
+export { connection, initializeConnection, terminateConnection }

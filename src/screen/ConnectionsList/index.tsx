@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil'
 
 import { connectionsState } from '../../atoms/connections'
 import Connection from './Connection'
-import NewConnectionModal from './NewConnectionModal'
+import ConnectionFormModal from './ConnectionFormModal'
 import { Container, Connections } from './styles'
 
 const ConnectionsList: React.FC = () => {
@@ -40,7 +40,7 @@ const ConnectionsList: React.FC = () => {
         </Connections>
       </Container>
 
-      <NewConnectionModal
+      <ConnectionFormModal
         visible={isCreateModalOpen}
         onRequestClose={toggleCreateModalOpen}
       />

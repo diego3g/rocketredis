@@ -1,7 +1,9 @@
 import { IConnection } from '../../atoms/connections'
 import { connections } from '../../store/connections'
 
-export function saveAndGetConnections(connection: IConnection): IConnection[] {
+export function createAndGetConnections(
+  connection: IConnection
+): IConnection[] {
   const currentConnections = connections.get('connections') as Array<
     IConnection
   >
