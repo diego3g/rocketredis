@@ -1,5 +1,12 @@
 {
   "connectionFailed": "Connection failed.",
   "keys": "keys",
-  "retry": "Retry?"
+  "retry": "Retry?",
+  "contextMenu": {
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "editSettings": "Edit settings",
+    "refreshDatabases": "Refresh databases",
+    "deleteConnection": "Delete connection"
+  }
 }

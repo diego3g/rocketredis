@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, memo } from 'react'
+import { useTranslation, Trans } from 'react-i18next'
 import { FiTrash } from 'react-icons/fi'
 import { useToggle } from 'react-use'
 
@@ -28,6 +29,7 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
   connectionToDelete
 }) => {
   const formRef = useRef<FormHandles>(null)
+  const { t } = useTranslation('deleteConnection')
   const { addToast } = useToast()
   const setConnections = useSetRecoilState(connectionsState)
 
@@ -50,7 +52,7 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
 
         if (deleteConfirmation !== 'DELETE') {
           formRef.current?.setErrors({
-            confirmation: 'Could not confirm deletion.'
+            confirmation: t('form.unconfirmedDeletionError')
           })
 
           return
@@ -79,6 +81,7 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
     },
     [
       toggleDeleteConnectionLoading,
+      t,
       addToast,
       connectionToDelete,
       setConnections,
@@ -88,16 +91,21 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
 
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
-      <h1>Delete connection</h1>
+      <h1>{t('title')}</h1>
 
       <TextContent>
         <p>
-          The connection <strong>{connectionToDelete.name}</strong> will be
-          permanently deleted.
+          <Trans
+            t={t}
+            i18nKey="deletingConnectionMessage"
+            values={{ name: connectionToDelete.name }}
+          >
+            The connection <strong>{name}</strong> will be permanently deleted.
+          </Trans>
         </p>
 
         <p>
-          Please confirm your action by typing <strong>DELETE</strong> below:
+          <Trans t={t} i18nKey="confirmDeletionMessage" />
         </p>
       </TextContent>
 
@@ -107,12 +115,12 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
         <ActionsContainer>
           <ButtonGroup>
             <Button onClick={handleCloseModal} type="button" color="opaque">
-              Cancel
+              {t('form.cancel')}
             </Button>
 
             <Button loading={deleteConnectionLoading} type="submit" color="red">
               <FiTrash />
-              Confirm deletion
+              {t('form.confirmDeletion')}
             </Button>
           </ButtonGroup>
         </ActionsContainer>

@@ -184,33 +184,33 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
             <MenuItem onClick={handleDisconnect}>
               <DisconnectButton>
                 <FiMinusCircle />
-                Disconnect
+                {t('contextMenu.disconnect')}
               </DisconnectButton>
             </MenuItem>
           ) : (
             <MenuItem onClick={handleConnect}>
               <ConnectButton>
                 <FiActivity />
-                Connect
+                {t('contextMenu.connect')}
               </ConnectButton>
             </MenuItem>
           )}
 
           <MenuItem onClick={toggleEditModalOpen}>
             <FiEdit2 />
-            Edit settings
+            {t('contextMenu.editSettings')}
           </MenuItem>
 
           {isConnected && (
             <MenuItem onClick={handleRefreshDatabases}>
               <FiRefreshCcw />
-              Refresh databases
+              {t('contextMenu.refreshDatabases')}
             </MenuItem>
           )}
 
           <MenuItem onClick={toggleDeleteModalOpen}>
             <FiTrash />
-            Delete connection
+            {t('contextMenu.deleteConnection')}
           </MenuItem>
         </ContextMenu>
 

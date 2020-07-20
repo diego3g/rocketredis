@@ -43,7 +43,7 @@ const ConnectionFormModal: React.FC<ConnectionModalProps> = ({
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
   const setConnections = useSetRecoilState(connectionsState)
-  const { t } = useTranslation('newConnection')
+  const { t } = useTranslation('connectionForm')
 
   const [testConnectionLoading, toggleTestConnectionLoading] = useToggle(false)
   const [createConnectionLoading, toggleCreateConnectionLoading] = useToggle(
@@ -180,7 +180,9 @@ const ConnectionFormModal: React.FC<ConnectionModalProps> = ({
 
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
-      <h1>{t('title')}</h1>
+      <h1>
+        {connectionToEdit ? t('editConnectionTitle') : t('newConnectionTitle')}
+      </h1>
 
       <Form
         initialData={{
