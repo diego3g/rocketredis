@@ -1,8 +1,9 @@
-import { FormHandles } from '@unform/core'
-import { Form } from '@unform/web'
 import React, { useRef, useCallback, memo } from 'react'
 import { FiTrash } from 'react-icons/fi'
 import { useToggle } from 'react-use'
+
+import { FormHandles } from '@unform/core'
+import { Form } from '@unform/web'
 import { useSetRecoilState } from 'recoil'
 
 import { IConnection, connectionsState } from '../../../atoms/connections'
@@ -15,6 +16,10 @@ import { TextContent, ActionsContainer, ButtonGroup } from './styles'
 
 interface ConnectionModalProps extends SharedModalProps {
   connectionToDelete: IConnection
+}
+
+interface DeleteConnectionFormData {
+  confirmation: string
 }
 
 const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
@@ -36,49 +41,50 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
     }
   }, [onRequestClose])
 
-  const handleDeleteConnection = useCallback(async () => {
-    try {
-      toggleDeleteConnectionLoading()
+  const handleDeleteConnection = useCallback(
+    async ({ confirmation: deleteConfirmation }: DeleteConnectionFormData) => {
+      try {
+        toggleDeleteConnectionLoading()
 
-      formRef.current?.setErrors({})
+        formRef.current?.setErrors({})
 
-      const { confirm } = formRef.current?.getData() as { confirm: string }
+        if (deleteConfirmation !== 'DELETE') {
+          formRef.current?.setErrors({
+            confirmation: 'Could not confirm deletion.'
+          })
 
-      if (confirm !== 'DELETE') {
-        formRef.current?.setErrors({
-          confirm: 'Could not confirm deletion.'
+          return
+        }
+
+        const connections = deleteAndGetConnections(connectionToDelete)
+
+        setConnections(connections)
+
+        addToast({
+          type: 'success',
+          title: 'Connection deleted',
+          description: 'This connection will not be available anymore.'
         })
 
-        return
+        handleCloseModal()
+      } catch (error) {
+        addToast({
+          type: 'error',
+          title: 'Error deleting connection',
+          description: error.message || 'Unexpected error occurred, try again.'
+        })
+      } finally {
+        toggleDeleteConnectionLoading()
       }
-
-      const connections = deleteAndGetConnections(connectionToDelete)
-
-      setConnections(connections)
-
-      addToast({
-        type: 'success',
-        title: 'Connection deleted',
-        description: 'This connection will not be available anymore.'
-      })
-
-      handleCloseModal()
-    } catch (error) {
-      addToast({
-        type: 'error',
-        title: 'Error deleting connection',
-        description: error.message || 'Unexpected error occurred, try again.'
-      })
-    } finally {
-      toggleDeleteConnectionLoading()
-    }
-  }, [
-    toggleDeleteConnectionLoading,
-    addToast,
-    connectionToDelete,
-    setConnections,
-    handleCloseModal
-  ])
+    },
+    [
+      toggleDeleteConnectionLoading,
+      addToast,
+      connectionToDelete,
+      setConnections,
+      handleCloseModal
+    ]
+  )
 
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
@@ -96,7 +102,7 @@ const DeleteConnectionModal: React.FC<ConnectionModalProps> = ({
       </TextContent>
 
       <Form ref={formRef} onSubmit={handleDeleteConnection}>
-        <Input name="confirm" />
+        <Input name="confirmation" />
 
         <ActionsContainer>
           <ButtonGroup>

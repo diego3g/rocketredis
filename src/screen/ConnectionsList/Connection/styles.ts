@@ -57,7 +57,7 @@ export const Container = styled.li<IContainerProps>`
   }
 
   .connection-actions-menu {
-    width: 220;
+    width: 220px;
     z-index: 1;
     padding: 8px 0;
     background: ${props => props.theme.backgrounds.darker};
@@ -66,6 +66,7 @@ export const Container = styled.li<IContainerProps>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     > div {
       display: flex;
@@ -77,28 +78,9 @@ export const Container = styled.li<IContainerProps>`
         background: ${props => props.theme.backgrounds.dark};
       }
 
-      svg {
+      > svg {
         margin-right: 8px;
         color: #9696a7;
-      }
-
-      :first-child {
-        ${props =>
-          props.connected
-            ? css`
-                color: ${props => props.theme.colors.red};
-
-                svg {
-                  color: ${props => props.theme.colors.red};
-                }
-              `
-            : css`
-                color: ${props => props.theme.colors.green};
-
-                svg {
-                  color: ${props => props.theme.colors.green};
-                }
-              `}
       }
     }
   }
@@ -114,6 +96,24 @@ export const Container = styled.li<IContainerProps>`
     css`
       background: ${props => props.theme.colors.red};
     `}
+`
+
+export const ConnectButton = styled.div`
+  color: ${props => props.theme.colors.green};
+
+  svg {
+    margin-right: 8px;
+    color: ${props => props.theme.colors.green};
+  }
+`
+
+export const DisconnectButton = styled.div`
+  color: ${props => props.theme.colors.red};
+
+  svg {
+    margin-right: 8px;
+    color: ${props => props.theme.colors.red};
+  }
 `
 
 export const DatabaseList = styled.div`

@@ -26,9 +26,7 @@ export const ButtonGroup = styled.div`
   display: flex;
   flex-direction: row;
 
-  button {
-    &:first-child {
-      margin-right: 8px;
-    }
+  button:first-child {
+    margin-right: 8px;
   }
 `

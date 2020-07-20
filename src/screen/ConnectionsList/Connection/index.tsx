@@ -24,15 +24,20 @@ import {
 } from '../../../atoms/connections'
 import { useToast } from '../../../context/toast'
 import { loadConnectionDatabases } from '../../../services/connection/LoadConnectionDatabases'
-import { initializeConnection } from '../../../services/RedisConnection'
+import {
+  initializeConnection,
+  terminateConnection
+} from '../../../services/RedisConnection'
+import ConnectionFormModal from '../ConnectionFormModal'
 import DeleteConnectionModal from '../DeleteConnectionModal'
-import NewConnectionModal from '../NewConnectionModal'
 import {
   Container,
   DatabaseList,
   ConnectionError,
   Database,
-  Loading
+  Loading,
+  ConnectButton,
+  DisconnectButton
 } from './styles'
 
 interface IConnectionProps {
@@ -48,7 +53,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   )
   const setCurrentKey = useSetRecoilState(currentKeyState)
   const [databases, setDatabases] = useState<IDatabase[]>([])
-  const [isConnecting, setIsConnecting] = useState(false)
+  const [connectionLoading, setConnectionLoading] = useState(false)
   const [isConnectionFailed, setIsConnectionFailed] = useState(false)
   const [isEditModalOpen, toggleEditModalOpen] = useToggle(false)
   const [isDeleteModalOpen, toggleDeleteModalOpen] = useToggle(false)
@@ -68,7 +73,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
 
   const handleConnect = useCallback(async () => {
     if (!isConnected) {
-      setIsConnecting(true)
+      setConnectionLoading(true)
       setCurrentConnection(undefined)
       setCurrentDatabase(undefined)
       setCurrentKey(undefined)
@@ -82,7 +87,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       } catch {
         setIsConnectionFailed(true)
       } finally {
-        setIsConnecting(false)
+        setConnectionLoading(false)
       }
     }
   }, [
@@ -96,11 +101,12 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
   const handleDisconnect = useCallback(async () => {
     setCurrentConnection(undefined)
     setCurrentDatabase(undefined)
+    terminateConnection()
   }, [setCurrentConnection, setCurrentDatabase])
 
   const handleRefreshDatabases = useCallback(async () => {
     try {
-      setIsConnecting(true)
+      setConnectionLoading(true)
 
       const databases = await loadConnectionDatabases(connection)
 
@@ -108,7 +114,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
     } catch {
       setIsConnectionFailed(true)
     } finally {
-      setIsConnecting(false)
+      setConnectionLoading(false)
     }
   }, [connection])
 
@@ -123,6 +129,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
     toggleDeleteModalOpen()
     setCurrentConnection(undefined)
     setCurrentDatabase(undefined)
+    terminateConnection()
   }, [toggleDeleteModalOpen, setCurrentConnection, setCurrentDatabase])
 
   const handleSelectDatabase = useCallback(
@@ -135,6 +142,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         await initializeConnection(currentConnection, database)
 
         setCurrentDatabase(database)
+        setCurrentKey(undefined)
       } catch {
         addToast({
           type: 'error',
@@ -144,7 +152,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         })
       }
     },
-    [currentConnection, addToast, setCurrentDatabase]
+    [currentConnection, addToast, setCurrentDatabase, setCurrentKey]
   )
 
   return (
@@ -156,7 +164,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
       >
         <ContextMenuTrigger id={`connection_actions_menu:${connection.name}`}>
           <button type="button" disabled={isConnected} onClick={handleConnect}>
-            {isConnecting ? (
+            {connectionLoading ? (
               <Loading>
                 <FiLoader />
               </Loading>
@@ -174,13 +182,17 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
         >
           {isConnected ? (
             <MenuItem onClick={handleDisconnect}>
-              <FiMinusCircle />
-              Disconnect
+              <DisconnectButton>
+                <FiMinusCircle />
+                Disconnect
+              </DisconnectButton>
             </MenuItem>
           ) : (
             <MenuItem onClick={handleConnect}>
-              <FiActivity />
-              Connect
+              <ConnectButton>
+                <FiActivity />
+                Connect
+              </ConnectButton>
             </MenuItem>
           )}
 
@@ -222,15 +234,15 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
 
         {isConnectionFailed && (
           <ConnectionError>
-            Connection failed.{' '}
+            {t('connectionFailed')}{' '}
             <button type="button" onClick={handleConnect}>
-              Retry?
+              {t('retry')}
             </button>
           </ConnectionError>
         )}
       </Container>
 
-      <NewConnectionModal
+      <ConnectionFormModal
         visible={isEditModalOpen}
         onRequestClose={postSavingConnection}
         connectionToEdit={connection}

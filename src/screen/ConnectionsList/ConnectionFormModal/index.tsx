@@ -13,7 +13,7 @@ import Button from '../../../components/Button'
 import Input from '../../../components/Form/Input'
 import Modal, { SharedModalProps } from '../../../components/Modal'
 import { useToast } from '../../../context/toast'
-import { saveAndGetConnections } from '../../../services/connection/SaveConnectionService'
+import { createAndGetConnections } from '../../../services/connection/CreateConnectionService'
 import { testConnection } from '../../../services/connection/TestConnectionService'
 import { updateAndGetConnections } from '../../../services/connection/UpdateConnectionService'
 import getValidationErrors from '../../../utils/getValidationErrors'
@@ -35,7 +35,7 @@ interface ConnectionFormData {
   password: string
 }
 
-const NewConnectionModal: React.FC<ConnectionModalProps> = ({
+const ConnectionFormModal: React.FC<ConnectionModalProps> = ({
   visible,
   onRequestClose,
   connectionToEdit
@@ -77,7 +77,7 @@ const NewConnectionModal: React.FC<ConnectionModalProps> = ({
         const { name, host, port, password } = data
 
         try {
-          const newConnectionData = {
+          const connectionData = {
             name,
             host,
             port: Number(port),
@@ -85,8 +85,8 @@ const NewConnectionModal: React.FC<ConnectionModalProps> = ({
           }
 
           const connections = connectionToEdit
-            ? updateAndGetConnections(connectionToEdit, newConnectionData)
-            : saveAndGetConnections(newConnectionData)
+            ? updateAndGetConnections(connectionToEdit, connectionData)
+            : createAndGetConnections(connectionData)
 
           setConnections(connections)
 
@@ -114,7 +114,13 @@ const NewConnectionModal: React.FC<ConnectionModalProps> = ({
         toggleCreateConnectionLoading()
       }
     },
-    [addToast, setConnections, toggleCreateConnectionLoading, handleCloseModal]
+    [
+      addToast,
+      setConnections,
+      toggleCreateConnectionLoading,
+      connectionToEdit,
+      handleCloseModal
+    ]
   )
 
   const handleTestConnection = useCallback(async () => {
@@ -228,4 +234,4 @@ const NewConnectionModal: React.FC<ConnectionModalProps> = ({
   )
 }
 
-export default memo(NewConnectionModal)
+export default memo(ConnectionFormModal)
