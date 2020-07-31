@@ -77,7 +77,7 @@
     "@commitlint/cli": "9.1.1",
     "@commitlint/config-conventional": "9.1.1",
     "@commitlint/core": "9.1.1",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.3.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.4.1",
     "@testing-library/react": "10.4.7",
     "@types/ioredis": "4.17.2",
     "@types/jest": "26.0.7",
