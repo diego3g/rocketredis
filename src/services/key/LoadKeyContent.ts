@@ -2,7 +2,7 @@ import { connection } from '../RedisConnection'
 
 export interface IKeyContent {
   content: string | null
-  type: 'hash' | 'list' | 'string'
+  type: 'hash' | 'list' | 'string' | 'set' | 'zset'
 }
 
 export async function loadKeyContent(key: string): Promise<IKeyContent> {
@@ -15,7 +15,7 @@ export async function loadKeyContent(key: string): Promise<IKeyContent> {
 
   let content: string | null = ''
 
-  if (!['hash', 'list', 'string'].includes(type)) {
+  if (!['hash', 'list', 'set', 'zset', 'string'].includes(type)) {
     throw new Error('Key type not supported yet.')
   }
 
@@ -30,6 +30,18 @@ export async function loadKeyContent(key: string): Promise<IKeyContent> {
       const listValue = await connection.lrange(key, 0, -1)
 
       content = JSON.stringify(listValue)
+      break
+    }
+    case 'set': {
+      const setValue = await connection.smembers(key)
+
+      content = JSON.stringify(setValue)
+      break
+    }
+    case 'zset': {
+      const zsetValue = await connection.zrange(key, 0, -1)
+
+      content = JSON.stringify(zsetValue)
       break
     }
     default: {
