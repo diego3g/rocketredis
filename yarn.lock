@@ -1735,15 +1735,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.19.tgz#994d99708822bca643a2364f8aeed04a16e0f5a1"
   integrity sha512-yf3BP/NIXF37BjrK5klu//asUWitOEoUP5xE1mhSUjazotwJ/eJDgEmMQNlOeWOVv72j24QQ+3bqXHE++CFGag==
 
-"@types/node@12.12.53":
+"@types/node@12.12.53", "@types/node@^12.0.12":
   version "12.12.53"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.53.tgz#be0d375933c3d15ef2380dafb3b0350ea7021129"
   integrity sha512-51MYTDTyCziHb70wtGNFRwB4l+5JNvdqzFSkbDvpbftEgVUBEE+T5f7pROhWMp/fxp07oNIEQZd5bbfAH22ohQ==
-
-"@types/node@^12.0.12":
-  version "12.12.48"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.48.tgz#4135f064eeed9fcfb4756deea5ba2caa11603391"
-  integrity sha512-m3Nmo/YaDUfYzdCQlxjF5pIy7TNyDTAJhIa//xtHcF0dlgYIBKULKnmloCPtByDxtZXrWV8Pge1AKT6/lRvVWg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4264,10 +4259,10 @@ electron-updater@4.3.4:
     lodash.isequal "^4.5.0"
     semver "^7.3.2"
 
-electron@9.1.2:
-  version "9.1.2"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-9.1.2.tgz#bfa26d6b192ea13abb6f1461371fd731a8358988"
-  integrity sha512-xEYadr3XqIqJ4ktBPo0lhzPdovv4jLCpiUUGc2M1frUhFhwqXokwhPaTUcE+zfu5+uf/ONDnQApwjzznBsRrgQ==
+electron@9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-9.3.0.tgz#a4f3dc17f31acc6797eb4c2c4bd0d0e25efb939b"
+  integrity sha512-7zPLEZ+kOjVJqfawMQ0vVuZZRqvZIeiID3tbjjbVybbxXIlFMpZ2jogoh7PV3rLrtm+dKRfu7Qc4E7ob1d0FqQ==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
