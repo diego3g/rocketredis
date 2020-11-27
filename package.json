@@ -117,7 +117,7 @@
     "react-refresh": "0.8.3",
     "rimraf": "3.0.2",
     "sort-package-json": "1.44.0",
-    "ts-jest": "26.1.4",
+    "ts-jest": "26.4.4",
     "typescript": "3.9.7",
     "webpack": "4.44.0",
     "webpack-cli": "3.3.12",
