@@ -82,7 +82,7 @@
     "@types/ioredis": "4.17.2",
     "@types/jest": "26.0.7",
     "@types/node": "12.12.53",
-    "@types/react": "16.9.41",
+    "@types/react": "16.14.2",
     "@types/react-dom": "16.9.8",
     "@types/react-modal": "3.10.6",
     "@types/react-resizable": "1.7.2",
