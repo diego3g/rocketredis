@@ -129,6 +129,11 @@
     "files": [
       "dist/"
     ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
     "mac": {
       "category": "public.app-category.developer-tools"
     },
