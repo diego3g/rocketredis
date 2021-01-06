@@ -63,7 +63,7 @@
     "react-use": "15.3.3",
     "react-virtual": "2.2.1",
     "recoil": "0.0.10",
-    "styled-components": "5.1.1",
+    "styled-components": "5.2.1",
     "uuidv4": "6.2.0",
     "wait-on": "5.1.0",
     "yup": "0.29.2"
@@ -86,7 +86,7 @@
     "@types/react-dom": "16.9.8",
     "@types/react-modal": "3.10.6",
     "@types/react-resizable": "1.7.2",
-    "@types/styled-components": "5.1.1",
+    "@types/styled-components": "5.1.7",
     "@types/yup": "0.29.3",
     "@typescript-eslint/eslint-plugin": "3.7.1",
     "@typescript-eslint/parser": "3.7.1",
