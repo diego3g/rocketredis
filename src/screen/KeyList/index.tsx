@@ -51,7 +51,7 @@ const KeyList: React.FC = () => {
 
   useDebounce(
     () => {
-      setFilter(searchInputValue)
+      setFilter(searchInputValue.trim().toLowerCase())
     },
     500,
     [searchInputValue]
@@ -62,7 +62,7 @@ const KeyList: React.FC = () => {
       return keys
     }
 
-    return keys.filter(key => key.includes(filter))
+    return keys.filter(key => key.trim().toLowerCase().includes(filter))
   }, [filter, keys])
 
   const rowVirtualizer = useVirtual({
