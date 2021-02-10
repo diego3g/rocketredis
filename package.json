@@ -93,7 +93,7 @@
     "babel-loader": "8.1.0",
     "commitizen": "4.1.2",
     "cross-env": "7.0.2",
-    "cz-conventional-changelog": "3.2.0",
+    "cz-conventional-changelog": "3.3.0",
     "electron": "11.1.0",
     "electron-builder": "22.8.0",
     "eslint": "7.5.0",
