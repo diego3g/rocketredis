@@ -109,7 +109,7 @@
     "eslint-plugin-react-hooks": "4.0.8",
     "eslint-plugin-standard": "4.0.1",
     "html-webpack-plugin": "4.3.0",
-    "husky": "4.2.5",
+    "husky": "4.3.8",
     "jest": "26.1.0",
     "json-schema-typed": "7.0.3",
     "lint-staged": "10.2.11",
