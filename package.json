@@ -112,7 +112,7 @@
     "husky": "4.2.5",
     "jest": "26.1.0",
     "json-schema-typed": "7.0.3",
-    "lint-staged": "10.2.11",
+    "lint-staged": "10.5.4",
     "prettier": "2.0.5",
     "react-refresh": "0.8.3",
     "rimraf": "3.0.2",
