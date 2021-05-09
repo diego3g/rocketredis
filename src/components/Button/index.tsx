@@ -6,7 +6,7 @@ import { Container, Loading } from './styles'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
-  color: keyof typeof defaultTheme.colors
+  color?: keyof typeof defaultTheme.colors
 }
 
 const Button: React.FC<ButtonProps> = ({
