@@ -219,6 +219,7 @@ const Connection: React.FC<IConnectionProps> = ({ connection }) => {
             {databases.map(database => (
               <Database
                 connected={currentDatabase?.name === database.name}
+                selected={currentDatabase?.name === database.name}
                 key={database.name}
                 onClick={() => handleSelectDatabase(database)}
                 type="button"

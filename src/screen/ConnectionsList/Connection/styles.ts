@@ -122,6 +122,7 @@ export const DatabaseList = styled.div`
 
 interface DatabaseProps {
   connected: boolean
+  selected: boolean
 }
 
 export const Database = styled.button<DatabaseProps>`
@@ -157,6 +158,20 @@ export const Database = styled.button<DatabaseProps>`
     props.connected &&
     css`
       background: rgba(0, 0, 0, 0.1);
+    `}
+
+  ${props =>
+    props.selected &&
+    css`
+      &::before {
+        position: absolute;
+        height: 24px;
+        width: 5px;
+        left: 0;
+        content: '';
+        border-radius: 0 2px 2px 0;
+        background: ${props.theme.colors.pink};
+      }
     `}
 `
 
