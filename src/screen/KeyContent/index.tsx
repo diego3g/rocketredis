@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useRecoilValue } from 'recoil'
 
 import { currentKeyState } from '../../atoms/connections'
+import ContentView from '../../components/ContentView'
 import EmptyContent from '../../components/EmptyContent'
 import { loadKeyContent, IKeyContent } from '../../services/key/LoadKeyContent'
 import { Container } from './styles'
@@ -28,7 +29,7 @@ const KeyContent: React.FC = () => {
       {!currentKey ? (
         <EmptyContent message={t('empty')} />
       ) : (
-        <div>{keyContent?.content}</div>
+        keyContent?.content && <ContentView content={keyContent.content} />
       )}
     </Container>
   )
