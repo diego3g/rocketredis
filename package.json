@@ -96,7 +96,7 @@
     "cz-conventional-changelog": "3.2.0",
     "electron": "11.1.0",
     "electron-builder": "22.8.0",
-    "eslint": "7.5.0",
+    "eslint": "7.28.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-config-standard": "14.1.1",
     "eslint-import-resolver-typescript": "2.0.0",
