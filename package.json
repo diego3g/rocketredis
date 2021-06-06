@@ -100,7 +100,7 @@
     "eslint-config-prettier": "6.11.0",
     "eslint-config-standard": "14.1.1",
     "eslint-import-resolver-typescript": "2.0.0",
-    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-import": "2.23.4",
     "eslint-plugin-import-helpers": "1.1.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "3.1.4",
