@@ -113,7 +113,7 @@
     "jest": "26.1.0",
     "json-schema-typed": "7.0.3",
     "lint-staged": "10.2.11",
-    "prettier": "2.0.5",
+    "prettier": "2.3.1",
     "react-refresh": "0.8.3",
     "rimraf": "3.0.2",
     "sort-package-json": "1.44.0",
