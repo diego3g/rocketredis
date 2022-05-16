@@ -116,7 +116,7 @@
     "prettier": "2.0.5",
     "react-refresh": "0.8.3",
     "rimraf": "3.0.2",
-    "sort-package-json": "1.44.0",
+    "sort-package-json": "1.57.0",
     "ts-jest": "26.4.4",
     "typescript": "3.9.7",
     "webpack": "4.44.0",
